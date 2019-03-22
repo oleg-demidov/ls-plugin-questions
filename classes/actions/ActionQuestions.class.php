@@ -46,7 +46,8 @@ class PluginQuestions_ActionQuestions extends ActionPlugin
         
         
         $this->RegisterEventExternal('Questions', 'PluginQuestions_ActionQuestions_EventQuestions');
-        $this->AddEventPreg('/^$/i',  'Questions::EventView');
+        $this->AddEventPreg('/^$/i',  ['Questions::EventList', 'list']);
+        $this->AddEventPreg('/^(add|edit)$/i', '/^([1-9]\d{0,5})?$/i', ['Questions::EventEdit', 'add_question']);
         
         
         

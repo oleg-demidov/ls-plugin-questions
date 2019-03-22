@@ -6,7 +6,7 @@
 
 
 {block 'layout_page_title'}
-    {$aLang.plugin.questions.index.title}
+    {$aLang.plugin.questions.edit_question.title}
 {/block}
 
 {block 'layout_content'}

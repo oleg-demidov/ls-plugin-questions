@@ -3,7 +3,8 @@
  * Таблица БД
  */
 
-//$config['$root$']['db']['table']['test_test_result'] = '___db.table.prefix___test_result';
+$config['$root$']['db']['table']['question_talk_question'] = '___db.table.prefix___question';
+$config['$root$']['db']['table']['question_talk_answer'] = '___db.table.prefix___answer';
 /**
  * Роутинг
  */
@@ -25,5 +26,22 @@ $config['admin']['components'] = [
 
 //$config['assets']['js'][]  = 'assets/js/init.js'; 
 
+$config['$root$']['block']['questions'] = array(
+    'action' => array(
+         'questions' => [
+             '{list}'
+         ]
+    ),
+    'blocks' => array(
+        'left' => array(
+            'component@questions:questions.block-actions' => array(
+                'priority' => 99,
+                'params' => array(
+                )
+            )
+        ),
+        'clear'  => false,
+    )
+);
 
 return $config;

@@ -25,6 +25,12 @@
 return array(
     'index' => [
         'title' => 'Вопросы и ответы'
+    ],
+    'menu_item' => [
+        'title' => 'Ответы'
+    ],
+    'edit_question' => [
+        'title' => 'Редактировать вопрос'
     ]
 );
 

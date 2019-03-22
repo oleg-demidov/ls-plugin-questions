@@ -19,7 +19,7 @@ class PluginQuestions extends Plugin
     public function Init()
     {
         
-        $this->Viewer_AppendScript(Plugin::GetTemplatePath('questions'). '/assets/js/init.js');
+        //$this->Viewer_AppendScript(Plugin::GetTemplatePath('questions'). '/assets/js/init.js');
     }
 
     public function Activate()

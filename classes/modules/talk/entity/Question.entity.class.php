@@ -6,12 +6,10 @@
  *
  * @author oleg
  */
-class ModuleTalk_EntityMessage extends EntityORM{
+class PluginQuestions_ModuleTalk_EntityQuestion extends EntityORM{
     
     protected $aValidateRules = [];
     
-    protected $sType = null;
-
 
     public function __construct($aParam = false)
     {
@@ -90,14 +88,13 @@ class ModuleTalk_EntityMessage extends EntityORM{
     
     protected $aRelations = array(
         'user' => array(self::RELATION_TYPE_BELONGS_TO, 'ModuleUser_EntityUser', 'user_id'),
-        'target_user' => array(self::RELATION_TYPE_BELONGS_TO, 'ModuleUser_EntityUser', 'target_id'),
-        'answers' => array(self::RELATION_TYPE_HAS_MANY, 'ModuleTalk_EntityAnswer', 'target_id', ['target_type' => 'response'])
+        'answers' => array(self::RELATION_TYPE_HAS_MANY, 'PluginQuestions_ModuleTalk_EntityAnswer', 'question_id')
     );
     
     public function ValidateDoubleText($sValue) {
         $sParseText = $this->Text_Parser($sValue);
         
-        if($this->Talk_GetMessageByFilter([
+        if($this->PluginQuestions_Talk_GetMessageByFilter([
             'type'  => $this->getType(),
             'text'  => $sParseText,
             'target_id' => $this->getTargetId(),
@@ -121,16 +118,6 @@ class ModuleTalk_EntityMessage extends EntityORM{
     }
     
     
-    public function ValidateExistMessage($sValue) {
-        if(!$this->Talk_GetMessageByFilter([
-            'id'  => $this->getTargetId(),
-            'type'  => $this->getTargetType()
-        ])){
-            return $this->Lang_Get('common.error.error').' '.$this->getTargetType().' not found';
-        }
-        return true;
-    }
-    
     public function getDateCreateFormat() {
         $date = new DateTime($this->getDateCreate());
         return $date->format('d.m.y');
@@ -147,8 +134,6 @@ class ModuleTalk_EntityMessage extends EntityORM{
     public function isPublish() {
         return in_array($this->getState(), [
             'publish',
-            'arbitrage',
-            'chat'
         ]);
     }
     
@@ -156,19 +141,12 @@ class ModuleTalk_EntityMessage extends EntityORM{
         /*
          * Удалить потомков
          */
-        $aChildrens = $this->Talk_GetMessageItemsByFilter([
-            'target_type' => $this->getType(),
-            'target_id'     => $this->getId()
-        ]);
         
-        foreach ($aChildrens as $oChildren) {
-            $oChildren->Delete();
-        }
         
         /*
          * Удалить медиа
          */        
-        $this->Media_RemoveTargetByTypeAndId($this->getType(), $this->getId());
+        $this->Media_RemoveTargetByTypeAndId('question', $this->getId());
        
     }
     
