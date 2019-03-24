@@ -52,15 +52,16 @@ class PluginQuestions_ActionAjax extends ActionPlugin
         
         
         
-        $this->RegisterEventExternal('Talk', 'PluginQuestions_ActionAjax_EventTalk');
-        $this->AddEventPreg('/^talk$/i', '/^edit-response$/', '/^$/', 'Talk::EventAjaxResponseEdit');
-        $this->AddEventPreg('/^talk$/i', '/^create-proposal$/', '/^$/', 'Talk::EventAjaxProposalCreate');
-        $this->AddEventPreg('/^talk$/i', '/^create-answer$/', '/^$/', 'Talk::EventAjaxAnswerCreate');
-        $this->AddEventPreg('/^talk$/i', '/^create-arbitrage$/', '/^$/', 'Talk::EventAjaxArbitrageCreate');
-        $this->AddEventPreg('/^talk$/i', '/^message-delete$/', '/^$/', 'Talk::EventAjaxMessageDelete');
-        $this->AddEventPreg('/^talk$/i', '/^create-arbitrage-chat$/', '/^$/', 'Talk::EventAjaxArbitrageChat');
-        
-        
+//        $this->RegisterEventExternal('Talk', 'PluginQuestions_ActionAjax_EventTalk');
+//        $this->AddEventPreg('/^talk$/i', '/^edit-response$/', '/^$/', 'Talk::EventAjaxResponseEdit');
+//        $this->AddEventPreg('/^talk$/i', '/^create-proposal$/', '/^$/', 'Talk::EventAjaxProposalCreate');
+//        $this->AddEventPreg('/^talk$/i', '/^create-answer$/', '/^$/', 'Talk::EventAjaxAnswerCreate');
+//        $this->AddEventPreg('/^talk$/i', '/^create-arbitrage$/', '/^$/', 'Talk::EventAjaxArbitrageCreate');
+//        $this->AddEventPreg('/^talk$/i', '/^message-delete$/', '/^$/', 'Talk::EventAjaxMessageDelete');
+//        $this->AddEventPreg('/^talk$/i', '/^create-arbitrage-chat$/', '/^$/', 'Talk::EventAjaxArbitrageChat');
+//        
+        $this->RegisterEventExternal('Question', 'PluginQuestions_ActionAjax_EventQuestion');
+        $this->AddEventPreg('/^(add|edit)\-question$/i', 'Question::EventEdit');
         
     }
 

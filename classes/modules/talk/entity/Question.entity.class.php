@@ -19,28 +19,38 @@ class PluginQuestions_ModuleTalk_EntityQuestion extends EntityORM{
         $this->aValidateRules[] =   array(
             'user_id', 
             'exist_user',
-            'on' => [ '', 'create_anoname', 'create']
+            'on' => [ 'create']
         );
-        $this->aValidateRules[] = array(
-            'user_name', 
-            'string',
-            'allowEmpty' => false,
-            'on' => ['create_anoname'],
-            'msg' => $this->Lang_Get('talk.response.notice.error_name')
-        );
+        
         $this->aValidateRules[] =    array(
-            'text', 
+            'title', 
             'string', 
             'max' => 200, 
             'min' => 10, 
             'allowEmpty' => false,
-            'msg' => $this->Lang_Get('talk.response.form.text.error_validate', ['min' => 10, 'max' => 200]),
-            'on' => ['', 'create_anoname', 'create']
+            'msg' => $this->Lang_Get('plugin.questions.edit_question.form.title.error_validate', ['min' => 10, 'max' => 200]),
+            'on' => [ 'create']
+        );
+        
+        $this->aValidateRules[] =    array(
+            'title', 
+            'title', 
+            'on' => [ 'create']
+        );
+        
+        $this->aValidateRules[] =    array(
+            'text', 
+            'string', 
+            'max' => 2000, 
+            'min' => 10, 
+            'allowEmpty' => false,
+            'msg' => $this->Lang_Get('plugin.questions.edit_question.form.text.error_validate', ['min' => 10, 'max' => 2000]),
+            'on' => [ 'create']
         );
         $this->aValidateRules[] =    array(
             'text', 
             'double_text',
-            'on' => ['create', 'create_anoname'],
+            'on' => ['create'],
         );
         
         $this->aValidateRules[] = [   
@@ -50,54 +60,20 @@ class PluginQuestions_ModuleTalk_EntityQuestion extends EntityORM{
             'on' => array( 'create')
         ];
         
-        if ((int)$this->getUserId() === 0) {
-            $this->aValidateRules[] = array(
-                'recaptcha',
-                'captcha_recaptcha',
-                'allowEmpty' => false,
-                'name'  => 'user_signup',
-                'on'    => array( 'create_anoname'),
-                'label' => $this->Lang_Get('auth.labels.captcha_field'),
-                'msg'   => $this->Lang_Get('talk.response.notice.error_captcha')
-            );
-            $this->aValidateRules[] = array(
-                'recaptcha',
-                'string',
-                'allowEmpty' => false,
-                'min'  => '10',
-                'on'    => array( 'create_anoname'),
-                'msg'   => $this->Lang_Get('talk.response.notice.error_captcha')
-            );
-            
-        }
         
     }
     
-    public function getUser() {
-        
-        if($this->getUserId() == 0){
-            return Engine::GetEntity('User_User', [
-                'name' => $this->getUserName(),
-                'login' => 'anoname',
-                'id' => 0
-            ]);
-        }
-        
-        return parent::getUser();
-    }
     
     protected $aRelations = array(
-        'user' => array(self::RELATION_TYPE_BELONGS_TO, 'ModuleUser_EntityUser', 'user_id'),
+        'author' => array(self::RELATION_TYPE_BELONGS_TO, 'ModuleUser_EntityUser', 'user_id'),
         'answers' => array(self::RELATION_TYPE_HAS_MANY, 'PluginQuestions_ModuleTalk_EntityAnswer', 'question_id')
     );
     
     public function ValidateDoubleText($sValue) {
         $sParseText = $this->Text_Parser($sValue);
         
-        if($this->PluginQuestions_Talk_GetMessageByFilter([
-            'type'  => $this->getType(),
+        if($this->PluginQuestions_Talk_GetQuestionByFilter([
             'text'  => $sParseText,
-            'target_id' => $this->getTargetId(),
             'user_id' => $this->getUserId()
         ])){
             return $this->Lang_Get('talk.'.$this->getType().'.notice.error_double_text');
@@ -107,17 +83,37 @@ class PluginQuestions_ModuleTalk_EntityQuestion extends EntityORM{
         return true;
     }
     
-    public function ValidateExistUser($sValue) {
-        if((int)$sValue === 0 ){
-            return true;
+    public function ValidateTitle($sValue) {
+        $sUrl = $this->Text_Transliteration($sValue);
+        
+        $oQuestion = $this->PluginQuestions_Talk_GetQuestionByFilter([
+            '#where' => ['t.id = ?d OR t.url = ?' => [$this->sCurrentEvent, $this->sCurrentEvent]]
+        ]);
+        
+        if($oQuestion){
+            return "double url";
         }
+        
+        $this->setUrl($sUrl);
+        
+        return true;
+    }
+    
+    public function ValidateExistUser($sValue) {
         if(!$this->User_GetUserById($sValue)){
             return $this->Lang_Get('common.error.error').' user not found';
         }
         return true;
     }
     
-    
+    public function getUrl() {
+        if(!parent::getUrl()){
+            return Router::GetPath('questions/'.$this->getId());
+        }
+        return Router::GetPath('questions/'.parent::getUrl());
+    }
+
+
     public function getDateCreateFormat() {
         $date = new DateTime($this->getDateCreate());
         return $date->format('d.m.y');

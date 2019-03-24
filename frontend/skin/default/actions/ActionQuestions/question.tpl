@@ -6,9 +6,12 @@
 
 
 {block 'layout_page_title'}
-    {$aLang.plugin.questions.index.title}
+    {$oQuestion->getTitle()}
 {/block}
 
 {block 'layout_content'}
-	
+    <div class="{$classes}">
+        {$oQuestion->getText()}
+    </div>
+
 {/block}
