@@ -10,5 +10,7 @@
 {/block}
 
 {block 'layout_content'}
+    
+    
 	
 {/block}
