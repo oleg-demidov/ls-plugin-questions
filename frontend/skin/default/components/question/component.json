@@ -1,0 +1,12 @@
+{
+    "name": "question",
+    "version": "1.0.0",
+    "dependencies": {
+        
+    },
+    "templates": {
+        "item": "question-item.tpl"
+    },
+    "styles": {
+    }
+}

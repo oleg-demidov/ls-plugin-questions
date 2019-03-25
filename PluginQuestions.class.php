@@ -18,7 +18,7 @@ class PluginQuestions extends Plugin
     
     public function Init()
     {
-        
+        $this->Component_Add('media');
         //$this->Viewer_AppendScript(Plugin::GetTemplatePath('questions'). '/assets/js/init.js');
     }
 
