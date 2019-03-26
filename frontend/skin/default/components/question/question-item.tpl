@@ -8,5 +8,10 @@
         <span class="text-muted">{$oQuestion->getAuthor()->getName()}</span> 
         <span class="mx-2">&bull;</span>
         <span class="text-muted font-italic">{$oQuestion->getDateCreateFormat()}</span>
+        {if $oUserCurrent and $oUserCurrent->getId() == $oQuestion->getAuthor()->getId()}
+            <span class="mx-2">&bull;</span>
+            <a href="{router page="questions/edit-question/{$oQuestion->getId()}"}" class="link">{$aLang.common.edit}</a>
+        {/if}
+
     </div>
 </div>

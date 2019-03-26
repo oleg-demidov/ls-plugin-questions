@@ -20,37 +20,33 @@
     
         {$oQuestion->_setValidateScenario('create')}
 
-        {* Текст *}
+        {* title *}
         {component 'bs-form' 
             validate   = [
                 entity => $oQuestion
             ]
             template    = 'text' 
             name        = "title"
+            value       = $oQuestion->getTitle()
             label       = $aLang.plugin.questions.edit_question.form.title.label
             placeholder = $aLang.plugin.questions.edit_question.form.title.placeholder
             }
         
         {* Текст *}
-        {component 'editor' 
+        {component 'questions:editor' 
             validate   = [
                 entity => $oQuestion
             ]
             type        = 'visual' 
-            inputClasses     = 'js-editor-default'
+            classes     = 'js-editor-default'
             name        = "text"
+            value       = $oQuestion->getText()
             label       = $aLang.plugin.questions.edit_question.form.text.label
             placeholder = $aLang.plugin.questions.edit_question.form.text.placeholder
             }
-        {if $oUserCurrent}
-            {component "bs-media.field" 
-                validate   = [
-                    entity => $oQuestion
-                ]
-                multiple = true
-                name    = 'photos'
-                label   = $aLang.plugin.questions.edit_question.form.photo.label 
-                text    = $aLang.plugin.questions.edit_question.form.photo.text }
+
+        {if !$oQuestion->_isNew()}
+            {component "field.hidden" name="id" value="{$oQuestion->getId()}"}
         {/if}
 
         {if $oUserCurrent}

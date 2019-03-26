@@ -29,7 +29,7 @@ class PluginQuestions_ModuleTalk_EntityQuestion extends EntityORM{
             'min' => 10, 
             'allowEmpty' => false,
             'msg' => $this->Lang_Get('plugin.questions.edit_question.form.title.error_validate', ['min' => 10, 'max' => 200]),
-            'on' => [ 'create']
+            'on' => [ 'create', 'edit']
         );
         
         $this->aValidateRules[] =    array(
@@ -45,7 +45,7 @@ class PluginQuestions_ModuleTalk_EntityQuestion extends EntityORM{
             'min' => 10, 
             'allowEmpty' => false,
             'msg' => $this->Lang_Get('plugin.questions.edit_question.form.text.error_validate', ['min' => 10, 'max' => 2000]),
-            'on' => [ 'create']
+            'on' => [ 'create', 'edit']
         );
         $this->aValidateRules[] =    array(
             'text', 
@@ -53,12 +53,6 @@ class PluginQuestions_ModuleTalk_EntityQuestion extends EntityORM{
             'on' => ['create'],
         );
         
-        $this->aValidateRules[] = [   
-            'photos_count', 
-            'number',
-            'max' => 1,
-            'on' => array( 'create')
-        ];
         
         
     }
@@ -86,12 +80,10 @@ class PluginQuestions_ModuleTalk_EntityQuestion extends EntityORM{
     public function ValidateTitle($sValue) {
         $sUrl = $this->Text_Transliteration($sValue);
         
-        $oQuestion = $this->PluginQuestions_Talk_GetQuestionByFilter([
-            '#where' => ['t.id = ?d OR t.url = ?' => [$this->sCurrentEvent, $this->sCurrentEvent]]
-        ]);
-        
-        if($oQuestion){
-            return "double url";
+        if($this->_isNew()){
+            if($oQuestion = $this->PluginQuestions_Talk_GetQuestionByTitle($sValue)){
+                 return "double title";
+            }
         }
         
         $this->setUrl($sUrl);

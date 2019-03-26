@@ -78,7 +78,7 @@ class PluginQuestions_ActionQuestions_EventQuestion extends Event {
                 $this->Message_AddError($this->Lang_Get('common.error.error'));
                 return;
             }
-            
+            $oQuestion->_setValidateScenario('edit');
         }
         
         $oQuestion->_setDataSafe($_REQUEST);
