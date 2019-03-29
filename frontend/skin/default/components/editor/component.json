@@ -1,5 +1,4 @@
 {
     "scripts": {
-        "plugin": "js/plugin.tinymce.js"
     }
 }

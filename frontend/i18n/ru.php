@@ -29,10 +29,36 @@ return array(
     'menu_item' => [
         'title' => 'Ответы'
     ],
+    'question' => [
+        'actions' => [
+            'subscribe' => 'Подписаться',
+            'like' => 'Нравится',
+            'complain' => 'Пожаловаться'
+        ],
+        'answer' => "%%count%% ответ;%%count%% ответа;%%count%% ответов;",
+        'respond' => 'Ответить'
+    ],
+    'answer' => [
+        'form' => [
+            'text' => [
+                'label' => 'Введите ответ',
+                'placeholder' => ''
+            ],
+            'submit' => [
+                'text' => 'Ответить'
+            ]
+        ],
+        'notice' => [
+            'error_double_text' => 'Ответ с таким текстом уже существует'
+        ]
+    ],
     'edit_question' => [
         'title_edit' => 'Редактировать вопрос',
         'title_add' => 'Добавить вопрос',
         'form' => [
+            'categories' => [
+                'label'       => 'Выберете категорию:'
+            ],
             'title' => [
                 'label' => 'Короткий заголовок:',
                 'placeholder' => 'Вопрос по ПДД',

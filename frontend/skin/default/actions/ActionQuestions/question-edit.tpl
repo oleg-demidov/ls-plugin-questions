@@ -19,6 +19,16 @@
     <form action="" data-form-ajax data-form-validate novalidate data-url="{router page='questions/edit-question-ajax'}">
     
         {$oQuestion->_setValidateScenario('create')}
+        
+        {insert name='block' block='fieldCategory' params=[
+            'target'      => $oQuestion,
+            'entity'      => 'PluginQuestions_ModuleTalk_EntityQuestion',
+            'target_type' => "questions",
+            'params'      => [
+                'label'    => {$aLang.plugin.questions.edit_question.form.categories.label}
+                    
+            ]
+        ]}
 
         {* title *}
         {component 'bs-form' 

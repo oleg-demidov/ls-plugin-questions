@@ -20,7 +20,7 @@
             sets: {
                 common: {
                     language: LANGUAGE,
-                    plugins: 'media table fullscreen autolink link pagebreak code autoresize livestreet questions',
+                    plugins: 'media table fullscreen autolink link pagebreak code autoresize livestreet',
                     skin: 'livestreet',
                     menubar: false,
                     statusbar: false,
@@ -77,7 +77,8 @@
                 light: {
                     toolbar: 'styleselect ls-pre ls-code | bold italic strikethrough underline blockquote | bullist numlist | removeformat code'
                 }
-            }
+            },
+            isInitialized:false
         },
 
         /**
@@ -96,6 +97,7 @@
         __init: function () {
             this.element.tinymce( $.extend( {
                 setup: function (editor) {
+                    this.option('isInitialized', true);
                     editor.on('keydown', function(event) {
                         if (event.ctrlKey && event.keyCode == 13){
                             this._trigger('submitted');
@@ -104,6 +106,10 @@
                     }.bind(this));
                 }.bind(this)
             }, this.option( 'sets.common' ), this.option( 'sets.' + this.option( 'set' ) ) ) );
+        },
+        
+        isInitialized: function(){
+            return this.option( 'isInitialized' );
         },
 
         /**
@@ -127,7 +133,7 @@
          * 
          */
         getText: function () {
-            this.element.tinymce().getContent();
+            return this.element.tinymce().getContent();
         },
 
         /**

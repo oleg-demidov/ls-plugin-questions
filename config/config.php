@@ -28,9 +28,9 @@ $config['admin']['components'] = [
 
 $config['$root$']['block']['questions'] = array(
     'action' => array(
-         'questions' => [
-             '{list}'
-         ]
+        'questions' => [
+            '{list}'
+        ]
     ),
     'blocks' => array(
         'left' => array(
@@ -38,10 +38,35 @@ $config['$root$']['block']['questions'] = array(
                 'priority' => 99,
                 'params' => array(
                 )
+            ), 
+            'categories' => array(
+                'priority' => 98,
+                'params' => array(
+                    'plugin' => 'questions'
+                )
             )
         ),
         'clear'  => false,
     )
 );
+
+//$config['$root$']['block']['question'] = array(
+//    'action' => array(
+//        'questions' => [
+//             '{question}'
+//        ]
+//    ),
+//    'blocks' => array(
+//        'left' => array(
+//            'categories' => array(
+//                'priority' => 98,
+//                'params' => array(
+//                    'plugin' => 'questions'
+//                )
+//            )
+//        ),
+//        'clear'  => false,
+//    )
+//);
 
 return $config;

@@ -4,22 +4,13 @@
 <div class="question media {$classes}">
     <img  class="mr-3 rounded-circle" src="{$oQuestion->getAuthor()->getProfileAvatar()}" alt="{$oQuestion->getAuthor()->getLogin()}">
     <div class="media-body">
-        <h5 class="mt-0"><a href="{$oQuestion->getUrl()}" class="link">{$oQuestion->getTitle()}</a></h5>
+        <h1 class="mt-0">{$oQuestion->getTitle()}</h1>
         <span class="text-muted">{$oQuestion->getAuthor()->getName()}</span> 
             
         <span class="mx-2">&bull;</span>
         <span class="text-muted font-italic">{$oQuestion->getDateCreateFormat()}</span>
         
-        <span class="mx-2">&bull;</span>
-        <span class="text-muted">
-            <a href="{$oQuestion->getUrl()}" class="link">
-                {if $oQuestion->getCountAnswer()}
-                    {lang name='plugin.questions.question.answer' plural=true count=1}
-                {else}
-                    {lang name='plugin.questions.question.respond' }
-                {/if}
-            </a>
-        </span>
+       
         
         {if $oUserCurrent and $oUserCurrent->getId() == $oQuestion->getAuthor()->getId() or $oUserCurrent->isAdministrator()}
             <span class="mx-2">&bull;</span>

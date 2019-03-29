@@ -5,7 +5,8 @@
         
     },
     "templates": {
-        "block-actions": "blocks/block-actions.tpl"
+        "block-actions": "blocks/block-actions.tpl",
+        "block-categories": "blocks/block-categories.tpl"
     },
     "styles": {
     }

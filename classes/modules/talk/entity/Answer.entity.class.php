@@ -19,14 +19,12 @@ class PluginQuestions_ModuleTalk_EntityAnswer extends EntityORM{
         $this->aValidateRules[] =   array(
             'user_id', 
             'exist_user',
-            'on' => [ '', 'create_anoname', 'create']
+            'on' => [ 'edit', 'create']
         );
         $this->aValidateRules[] = array(
-            'user_name', 
-            'string',
-            'allowEmpty' => false,
-            'on' => ['create_anoname'],
-            'msg' => $this->Lang_Get('talk.response.notice.error_name')
+            'question_id', 
+            'exist_question',
+            'on' => [ 'edit', 'create']            
         );
         $this->aValidateRules[] =    array(
             'text', 
@@ -35,56 +33,17 @@ class PluginQuestions_ModuleTalk_EntityAnswer extends EntityORM{
             'min' => 10, 
             'allowEmpty' => false,
             'msg' => $this->Lang_Get('talk.response.form.text.error_validate', ['min' => 10, 'max' => 200]),
-            'on' => ['', 'create_anoname', 'create']
+            'on' => [ 'edit', 'create']
         );
         $this->aValidateRules[] =    array(
             'text', 
             'double_text',
-            'on' => ['create', 'create_anoname'],
+            'on' => [ 'edit', 'create']
         );
         
-        $this->aValidateRules[] = [   
-            'photos_count', 
-            'number',
-            'max' => 1,
-            'on' => array( 'create')
-        ];
-        
-        if ((int)$this->getUserId() === 0) {
-            $this->aValidateRules[] = array(
-                'recaptcha',
-                'captcha_recaptcha',
-                'allowEmpty' => false,
-                'name'  => 'user_signup',
-                'on'    => array( 'create_anoname'),
-                'label' => $this->Lang_Get('auth.labels.captcha_field'),
-                'msg'   => $this->Lang_Get('talk.response.notice.error_captcha')
-            );
-            $this->aValidateRules[] = array(
-                'recaptcha',
-                'string',
-                'allowEmpty' => false,
-                'min'  => '10',
-                'on'    => array( 'create_anoname'),
-                'msg'   => $this->Lang_Get('talk.response.notice.error_captcha')
-            );
-            
-        }
         
     }
     
-    public function getUser() {
-        
-        if($this->getUserId() == 0){
-            return Engine::GetEntity('User_User', [
-                'name' => $this->getUserName(),
-                'login' => 'anoname',
-                'id' => 0
-            ]);
-        }
-        
-        return parent::getUser();
-    }
     
     protected $aRelations = array(
         'user' => array(self::RELATION_TYPE_BELONGS_TO, 'ModuleUser_EntityUser', 'user_id'),
@@ -94,15 +53,14 @@ class PluginQuestions_ModuleTalk_EntityAnswer extends EntityORM{
     public function ValidateDoubleText($sValue) {
         $sParseText = $this->Text_Parser($sValue);
         
-        if($this->PluginQuestions_Talk_GetMessageByFilter([
-            'type'  => $this->getType(),
+        if( $this->PluginQuestions_Talk_GetAnswerByFilter([
+            '#where' => ['t.id != ?' => [($this->getId() !== null)?$this->getId():0] ],
             'text'  => $sParseText,
-            'target_id' => $this->getTargetId(),
-            'user_id' => $this->getUserId()
+            'user_id' => $this->getUserId(),
+            'question_id' => $this->getQuestionId()
         ])){
-            return $this->Lang_Get('talk.'.$this->getType().'.notice.error_double_text');
+            return $this->Lang_Get('plugin.questions.answer.notice.error_double_text');
         }
-        $this->setText( $sParseText );
         
         return true;
     }
@@ -117,6 +75,13 @@ class PluginQuestions_ModuleTalk_EntityAnswer extends EntityORM{
         return true;
     }
     
+    public function ValidateExistQuestion($sValue) {
+        if(!$this->PluginQuestions_Talk_GetQuestionById($sValue) ){
+            return $this->Lang_Get('common.error.error').' Question not found';
+        }
+       
+        return true;
+    }
     
     public function getDateCreateFormat() {
         $date = new DateTime($this->getDateCreate());

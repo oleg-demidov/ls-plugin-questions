@@ -11,11 +11,14 @@
 
 {block 'layout_content'}
     <div class="mt-4">
-        {foreach $aQuestions as $oQuestion}
+        {foreach name="questions" from=$aQuestions  item='oQuestion'}
             {component "questions:question.item" 
                 classes     = "mt-2"
                 oQuestion   = $oQuestion}
-            <hr>
+            {if !$smarty.foreach.questions.last}
+                <hr>
+            {/if}
+            
         {/foreach}
     </div>
 {/block}

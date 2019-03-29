@@ -35,7 +35,7 @@
         {asset type='js' defer=true file="Component@editor.vendor/tinymce/js/tinymce/tinymce.min"}
         {asset type='js' defer=true file="Component@editor.vendor/tinymce/js/tinymce/jquery.tinymce.min"}
         {asset type='js' defer=true file="Component@questions:editor.visual"}
-        {asset type='js' defer=true file="Component@questions:editor.plugin"}
+        
 
         {editor_textarea}
     {/hookb}

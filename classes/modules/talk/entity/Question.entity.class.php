@@ -10,6 +10,15 @@ class PluginQuestions_ModuleTalk_EntityQuestion extends EntityORM{
     
     protected $aValidateRules = [];
     
+    protected $aBehaviors = array(
+        // Категории
+        'category' => array(
+            'class'       => 'ModuleCategory_BehaviorEntity',
+            'target_type' => 'questions',
+            'form_field'  => 'category',
+            'validate_require'               => true,
+        )
+    );
 
     public function __construct($aParam = false)
     {
@@ -35,7 +44,7 @@ class PluginQuestions_ModuleTalk_EntityQuestion extends EntityORM{
         $this->aValidateRules[] =    array(
             'title', 
             'title', 
-            'on' => [ 'create']
+            'on' => [ 'create', 'edit']
         );
         
         $this->aValidateRules[] =    array(
@@ -66,7 +75,7 @@ class PluginQuestions_ModuleTalk_EntityQuestion extends EntityORM{
     public function ValidateDoubleText($sValue) {
         $sParseText = $this->Text_Parser($sValue);
         
-        if($this->PluginQuestions_Talk_GetQuestionByFilter([
+        if($this->_isNew() and $this->PluginQuestions_Talk_GetQuestionByFilter([
             'text'  => $sParseText,
             'user_id' => $this->getUserId()
         ])){
@@ -100,9 +109,9 @@ class PluginQuestions_ModuleTalk_EntityQuestion extends EntityORM{
     
     public function getUrl() {
         if(!parent::getUrl()){
-            return Router::GetPath('questions/'.$this->getId());
+            return Router::GetPathRootWeb() .'/questions/'.$this->getId().'.html';
         }
-        return Router::GetPath('questions/'.parent::getUrl());
+        return Router::GetPathRootWeb() .'/questions/'.parent::getUrl().'.html';
     }
 
 

@@ -49,7 +49,17 @@ class PluginQuestions_ActionQuestions_EventQuestion extends Event {
     
     public function EventList()
     {
-        $aQuestions = $this->PluginQuestions_Talk_GetQuestionAll();
+        $aFilter = [];
+        
+        $aCategoryUrl = array_merge([$this->sCurrentEvent], $this->GetParams());
+        $oCategory = $this->Category_GetCategoryByUrlFull( join('/', $aCategoryUrl) );
+        
+        if($oCategory){
+            $aQuestionIds = $this->Category_GetTargetIdsByCategoriesId([$oCategory->getId()], 'questions', 1, 4);
+            $aFilter['id in'] = $aQuestionIds;
+        }
+        
+        $aQuestions = $this->PluginQuestions_Talk_GetQuestionItemsByFilter($aFilter); 
         
         $this->Viewer_Assign('aQuestions', $aQuestions);
         $this->SetTemplateAction('question-list');
@@ -57,10 +67,11 @@ class PluginQuestions_ActionQuestions_EventQuestion extends Event {
     
     public function EventView() {
         $oQuestion = $this->PluginQuestions_Talk_GetQuestionByFilter([
-            '#where' => ['t.id = ?d OR t.url = ?' => [$this->sCurrentEvent, $this->sCurrentEvent]]
+            '#where' => ['t.id = ?d OR t.url = ?' => [$this->GetEventMatch(1), $this->GetEventMatch(1)]]
         ]);
         
         $this->Viewer_Assign('oQuestion', $oQuestion);
+        $this->Viewer_Assign('oAnswer', Engine::GetEntity('PluginQuestions_Talk_Answer'));
         $this->SetTemplateAction('question');
     }
         
@@ -83,6 +94,8 @@ class PluginQuestions_ActionQuestions_EventQuestion extends Event {
         
         $oQuestion->_setDataSafe($_REQUEST);
         $oQuestion->setUserId($this->oUserCurrent->getId());
+        $oQuestion->setText($this->Text_Parser($oQuestion->getText()));
+        $oQuestion->setCategory(getRequest('category'));
         
         if($oQuestion->_Validate()){
             if($oQuestion->Save()){
