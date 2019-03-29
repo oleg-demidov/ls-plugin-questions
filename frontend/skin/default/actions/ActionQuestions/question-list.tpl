@@ -20,5 +20,11 @@
             {/if}
             
         {/foreach}
+        {if !count($aQuestions)}
+            {component "blankslate" 
+                text    = $aLang.plugin.questions.question.blankslate.text 
+                }
+        {/if}
+
     </div>
 {/block}

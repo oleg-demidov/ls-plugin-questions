@@ -7,7 +7,7 @@
  
 {component_define_params params=[ 'oAnswer', 'question_id',  'redirect']}
 
-<form action="" data-form-ajax data-form-validate novalidate data-url="{router page='ajax/talk/create-answer'}" class=" mb-3">
+<form action="" data-form-ajax data-form-validate novalidate data-url="{router page='questions/edit-answer-ajax'}">
      
     {$oAnswer->_setValidateScenario('create')}
     
@@ -24,8 +24,6 @@
         placeholder = $aLang.plugin.questions.answer.form.text.placeholder
     }
         
-    
-    {component "field.hidden" name="user_id" value="{$oUserCurrent->getId()}"}
     {component "field.hidden" name="question_id" value="{$question_id}"}
     
     <input type="hidden" name="redirect" value="{$redirect}">

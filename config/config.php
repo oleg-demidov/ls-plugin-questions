@@ -3,8 +3,8 @@
  * Таблица БД
  */
 
-$config['$root$']['db']['table']['questions_talk_question'] = '___db.table.prefix___question';
-$config['$root$']['db']['table']['questions_talk_answer'] = '___db.table.prefix___answer';
+$config['$root$']['db']['table']['questions_talk_question'] = '___db.table.prefix___questions_question';
+$config['$root$']['db']['table']['questions_talk_answer'] = '___db.table.prefix___questions_answer';
 /**
  * Роутинг
  */

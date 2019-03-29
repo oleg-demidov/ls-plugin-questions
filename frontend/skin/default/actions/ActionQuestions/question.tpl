@@ -36,7 +36,9 @@
             <div class="mt-3">
                 {component "bs-button" 
                     bmods = "outline-success"
+                    icon = [icon => "thumbs-up", display => 'r', classes => 'mr-1']
                     text = $aLang.plugin.questions.question.actions.like}
+                    
                 {component "bs-button" 
                     bmods = "outline-primary"
                     text = $aLang.plugin.questions.question.actions.subscribe}
@@ -48,28 +50,43 @@
             </div>
         </div>
     </div>
-    
-    
-    <hr>
-    
-    {capture name="form_answer"}
-        <div class="d-flex flex-md-row flex-column"> 
+            
+   {capture name="form_answer"}
+        <div class="d-flex flex-md-row flex-column ml-3"> 
             <div class="pr-3 pb-3" >
                 <img class="rounded-circle" src="{$oUserCurrent->getProfileAvatar()}" alt="{$oUserCurrent->getLogin()}">
             </div>
             <div class="flex-fill">
                 {component "questions:answer.form"
                     question_id = $oQuestion->getId()
-                    oAnswer     = $oAnswer}
+                    oAnswer     = $oAnswerEntity}
             </div>
         </div>
     {/capture}
+    
+    {capture name="answers"}
+        {foreach $oQuestion->getAnswers() as $oAnswer}
+            {component 'questions:answer' oAnswer=$oAnswer}
+        {/foreach}
+    {/capture}
+    
+    {component "bs-tabs" bmods="tabs" classes="mt-4" contentClasses="mt-3" activeItem="answers" items = [
+        [ text => $aLang.plugin.questions.answer.answers , content => $smarty.capture.answers, name => 'answers'],
+        [ text => $aLang.plugin.questions.answer.answered , content => $smarty.capture.form_answer, name => 'form']
+    ]}
+    
+    
 
+    
+
+    
+    
+{*
     {component "bs-card" classes = "bg-light  border-0" content = [
         [
             type => 'body',
             content => $smarty.capture.form_answer
         ]
-    ]}
+    ]}*}
     
 {/block}

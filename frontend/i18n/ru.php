@@ -36,22 +36,12 @@ return array(
             'complain' => 'Пожаловаться'
         ],
         'answer' => "%%count%% ответ;%%count%% ответа;%%count%% ответов;",
-        'respond' => 'Ответить'
-    ],
-    'answer' => [
-        'form' => [
-            'text' => [
-                'label' => 'Введите ответ',
-                'placeholder' => ''
-            ],
-            'submit' => [
-                'text' => 'Ответить'
-            ]
-        ],
-        'notice' => [
-            'error_double_text' => 'Ответ с таким текстом уже существует'
+        'respond' => 'Ответить',
+        'blankslate' => [
+            'text' => 'Вoпросов нет'
         ]
     ],
+    
     'edit_question' => [
         'title_edit' => 'Редактировать вопрос',
         'title_add' => 'Добавить вопрос',
@@ -74,7 +64,23 @@ return array(
                 'text' => 'Вставить'
             ]
         ]
-    ]
+    ],
+    'answer' => [
+        'answers' => 'Ответы',
+        'answered' => 'Ответить',
+        'form' => [
+            'text' => [
+                'label' => 'Введите ответ',
+                'placeholder' => ''
+            ],
+            'submit' => [
+                'text' => 'Ответить'
+            ]
+        ],
+        'notice' => [
+            'error_double_text' => 'Ответ с таким текстом уже существует'
+        ]
+    ],
 );
 
 ?>

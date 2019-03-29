@@ -56,7 +56,9 @@ class PluginQuestions_ActionQuestions_EventQuestion extends Event {
         
         if($oCategory){
             $aQuestionIds = $this->Category_GetTargetIdsByCategoriesId([$oCategory->getId()], 'questions', 1, 4);
-            $aFilter['id in'] = $aQuestionIds;
+            if($aQuestionIds){
+                 $aFilter['id in'] = $aQuestionIds;
+            }
         }
         
         $aQuestions = $this->PluginQuestions_Talk_GetQuestionItemsByFilter($aFilter); 
@@ -71,7 +73,7 @@ class PluginQuestions_ActionQuestions_EventQuestion extends Event {
         ]);
         
         $this->Viewer_Assign('oQuestion', $oQuestion);
-        $this->Viewer_Assign('oAnswer', Engine::GetEntity('PluginQuestions_Talk_Answer'));
+        $this->Viewer_Assign('oAnswerEntity', Engine::GetEntity('PluginQuestions_Talk_Answer'));
         $this->SetTemplateAction('question');
     }
         

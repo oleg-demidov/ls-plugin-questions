@@ -2,58 +2,48 @@
  * Предложение
  *}
  
-{component_define_params params=[ 'entity', 'deleted', 'redirect']}
+{component_define_params params=[ 'oAnswer']}
 
-<div class="response mt-2">
-    <div class="row">
-        <div class="col-5">{component "user" oUser=$entity->getUser()}</div>
-        <div class="col-7 align-self-end text-muted">{$entity->getDateCreateFormat()}</div>
-    </div>
-    <div class="row m-3">
-        <div class="col-12 pl-5">
-            {component "bs-text" text=$entity->getText() }
-            
-            {if is_array($entity->getMedia()) and count($entity->getMedia())}
-                {$items = []}
-                {foreach $entity->getMedia() as $oMedia}
-                    {$items[] = [
-                        href    => $oMedia->getFileWebPath(),
-                        src     => $oMedia->getFileWebPath('x200crop')
-                    ]}
-                {/foreach}
-                <div class="row">
-                    <div class="col-sm-6 col-md-3">
-                        {$controls = (count($items)>1)}
-                        {component 'bs-carousel' 
-                            classes     = "slide w-100 mt-3"  
-                            indicators  = $controls 
-                            controls    = $controls  
-                            items       = $items}
-                    </div>
-                </div>
-                    
-                
-                
+<div class="ml-3 d-flex flex-md-row flex-column">
+        <div class="pb-3">
+            <img  class="mr-3 rounded-circle" src="{$oAnswer->getAuthor()->getProfileAvatar()}" alt="{$oAnswer->getAuthor()->getLogin()}">
+        </div>
+        
+        <div>
+            <span class="text-muted">{$oAnswer->getAuthor()->getName()}</span> 
+
+            <span class="mx-2">&bull;</span>
+            <span class="text-muted font-italic">{$oAnswer->getDateCreateFormat()}</span>
+
+
+
+            {if $oUserCurrent and $oUserCurrent->getId() == $oAnswer->getAuthor()->getId() or $oUserCurrent->isAdministrator()}
+                <span class="mx-2">&bull;</span>
+                {component "bs-button" 
+                    com     = "link"
+                    url     = {router page="questions/edit-question/{$oAnswer->getId()}"}
+                    text    = {component "bs-icon" icon="edit"}
+                    popover = [content => $aLang.common.edit] }
+
             {/if}
-            <div class="row mt-2">
-                <div class="col-sm-8"></div>
-                <div class="col-sm-4 align-content-end">
-                    {if $deleted and $oUserCurrent and $entity->getUser()->getId() == $oUserCurrent->getId()}
-                        <form data-url="{router page='ajax/talk/message-delete'}" data-form-ajax>
-                            <input type="hidden" name="id" value="{$entity->getId()}">
-                            <input type="hidden" name="redirect" value="{$redirect}">
-                            {component "bs-button" 
-                                attributes = ['data-confirm-remove' => true]
-                                bmods   = "link"  
-                                classes = "text-danger" 
-                                type    = "submit" 
-                                text    = $aLang.common.remove}
-                        </form>
-                    {/if}
-                    
-                </div>
+            <br>
+            <div class="py-3">
+                {$oAnswer->getText()}
             </div>
-            
+            <div class="mt-3">
+                {component "bs-button" 
+                    bmods = "outline-success"
+                    icon = [icon => "thumbs-up", display => 'r', classes => 'mr-1']
+                    text = $aLang.plugin.questions.question.actions.like}
+                    
+                {component "bs-button" 
+                    bmods = "outline-primary"
+                    text = $aLang.plugin.questions.question.actions.subscribe}
+                
+                {component "bs-button" 
+                    popover = $aLang.plugin.questions.question.actions.complain
+                    bmods = "outline-danger"
+                    icon = "ban"}
+            </div>
         </div>
     </div>
-</div>

@@ -46,7 +46,7 @@ class PluginQuestions_ModuleTalk_EntityAnswer extends EntityORM{
     
     
     protected $aRelations = array(
-        'user' => array(self::RELATION_TYPE_BELONGS_TO, 'ModuleUser_EntityUser', 'user_id'),
+        'author' => array(self::RELATION_TYPE_BELONGS_TO, 'ModuleUser_EntityUser', 'user_id'),
         'question' => array(self::RELATION_TYPE_BELONGS_TO, 'PluginQuestions_ModuleTalk_EntityQuestion', 'question_id')
     );
     

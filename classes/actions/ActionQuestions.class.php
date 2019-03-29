@@ -42,13 +42,18 @@ class PluginQuestions_ActionQuestions extends ActionPlugin
      */
     protected function RegisterEvent()
     {        
-                
+            
+        $this->RegisterEventExternal('Answer', 'PluginQuestions_ActionQuestions_EventAnswer');
+        $this->AddEventPreg('/^(add|edit)-answer-ajax$/i', 'Answer::EventEditAjax');    
+        
         $this->RegisterEventExternal('Question', 'PluginQuestions_ActionQuestions_EventQuestion');
         $this->AddEventPreg('/^(add|edit)-question$/i', '/^([1-9]\d{0,10})?$/i', ['Question::EventEdit', 'edit_question']);
         $this->AddEventPreg('/^(add|edit)-question-ajax$/i', 'Question::EventEditAjax');
         $this->AddEventPreg('/^([\w\-\_]+)\.html$/i', ['Question::EventView', 'question']);
         $this->AddEventPreg('/^[\w\-\_]+\$/i', ['Question::EventView', 'question']);
         $this->AddEventPreg('/^([\w\-\_]+)?$/i','/^([\w\-\_]+)?$/i','/^([\w\-\_]+)?$/i', ['Question::EventList', 'list']);
+        
+        
     }
 
     
