@@ -50,23 +50,23 @@ $config['$root$']['block']['questions'] = array(
     )
 );
 
-//$config['$root$']['block']['question'] = array(
-//    'action' => array(
-//        'questions' => [
-//             '{question}'
-//        ]
-//    ),
-//    'blocks' => array(
-//        'left' => array(
-//            'categories' => array(
-//                'priority' => 98,
-//                'params' => array(
-//                    'plugin' => 'questions'
-//                )
-//            )
-//        ),
-//        'clear'  => false,
-//    )
-//);
+$config['$root$']['block']['question'] = array(
+    'action' => array(
+        'questions' => [
+             '{question}'
+        ]
+    ),
+    'blocks' => array(
+        'left' => array(
+            'categories' => array(
+                'priority' => 98,
+                'params' => array(
+                    'plugin' => 'questions'
+                )
+            )
+        ),
+        'clear'  => false,
+    )
+);
 
 return $config;

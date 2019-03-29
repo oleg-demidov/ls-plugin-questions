@@ -114,6 +114,9 @@ class PluginQuestions_ModuleTalk_EntityQuestion extends EntityORM{
         return Router::GetPathRootWeb() .'/questions/'.parent::getUrl().'.html';
     }
 
+    public function getCountAnswers() {
+        return count($this->getAnswers());
+    }
 
     public function getDateCreateFormat() {
         $date = new DateTime($this->getDateCreate());

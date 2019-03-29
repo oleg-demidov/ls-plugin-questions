@@ -4,7 +4,7 @@
  
 {component_define_params params=[ 'oAnswer']}
 
-<div class="ml-3 d-flex flex-md-row flex-column">
+<div class="answer ml-3 d-flex flex-md-row flex-column" data-id="{$oAnswer->getId()}">
         <div class="pb-3">
             <img  class="mr-3 rounded-circle" src="{$oAnswer->getAuthor()->getProfileAvatar()}" alt="{$oAnswer->getAuthor()->getLogin()}">
         </div>
@@ -20,26 +20,21 @@
             {if $oUserCurrent and $oUserCurrent->getId() == $oAnswer->getAuthor()->getId() or $oUserCurrent->isAdministrator()}
                 <span class="mx-2">&bull;</span>
                 {component "bs-button" 
+                    classes = "btn-edit"
                     com     = "link"
-                    url     = {router page="questions/edit-question/{$oAnswer->getId()}"}
+                    url     = "#"
                     text    = {component "bs-icon" icon="edit"}
                     popover = [content => $aLang.common.edit] }
 
             {/if}
             <br>
-            <div class="py-3">
-                {$oAnswer->getText()}
-            </div>
+            <div class="py-3 answer-text">{$oAnswer->getText()}</div>
             <div class="mt-3">
                 {component "bs-button" 
                     bmods = "outline-success"
                     icon = [icon => "thumbs-up", display => 'r', classes => 'mr-1']
                     text = $aLang.plugin.questions.question.actions.like}
                     
-                {component "bs-button" 
-                    bmods = "outline-primary"
-                    text = $aLang.plugin.questions.question.actions.subscribe}
-                
                 {component "bs-button" 
                     popover = $aLang.plugin.questions.question.actions.complain
                     bmods = "outline-danger"

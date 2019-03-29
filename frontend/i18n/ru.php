@@ -66,6 +66,9 @@ return array(
         ]
     ],
     'answer' => [
+        'blankslate' => [
+            'text' => 'Ответов нет'
+        ],
         'answers' => 'Ответы',
         'answered' => 'Ответить',
         'form' => [

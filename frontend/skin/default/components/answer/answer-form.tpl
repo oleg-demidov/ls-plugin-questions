@@ -7,7 +7,7 @@
  
 {component_define_params params=[ 'oAnswer', 'question_id',  'redirect']}
 
-<form action="" data-form-ajax data-form-validate novalidate data-url="{router page='questions/edit-answer-ajax'}">
+<form action="" class="answer-form" data-form-ajax data-form-validate novalidate data-url="{router page='questions/edit-answer-ajax'}">
      
     {$oAnswer->_setValidateScenario('create')}
     
@@ -17,7 +17,7 @@
             entity => $oAnswer
         ]
         type        = 'visual' 
-        classes     = 'js-editor-default'
+        classes     = 'js-editor-answer'
         name        = "text"
         value       = $oAnswer->getText()
         label       = $aLang.plugin.questions.answer.form.text.label

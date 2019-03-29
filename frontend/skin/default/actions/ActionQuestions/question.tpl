@@ -68,11 +68,26 @@
         {foreach $oQuestion->getAnswers() as $oAnswer}
             {component 'questions:answer' oAnswer=$oAnswer}
         {/foreach}
+        {if !$oQuestion->getCountAnswers()}
+            {component "blankslate" 
+                text    = $aLang.plugin.questions.answer.blankslate.text 
+                }
+        {/if}
     {/capture}
     
-    {component "bs-tabs" bmods="tabs" classes="mt-4" contentClasses="mt-3" activeItem="answers" items = [
-        [ text => $aLang.plugin.questions.answer.answers , content => $smarty.capture.answers, name => 'answers'],
-        [ text => $aLang.plugin.questions.answer.answered , content => $smarty.capture.form_answer, name => 'form']
+    {component "bs-tabs" bmods="tabs" classes="mt-5" contentClasses="mt-4" activeItem="answers" items = [
+        [ 
+            text => $aLang.plugin.questions.answer.answers , 
+            content => $smarty.capture.answers, 
+            name => 'answers',
+            badge => $oQuestion->getCountAnswers()
+        ],
+        [ 
+            attributes => ['data-tab-answer-form' => true],
+            text => $aLang.plugin.questions.answer.answered , 
+            content => $smarty.capture.form_answer, 
+            name => 'form'
+        ]
     ]}
     
     

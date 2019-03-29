@@ -18,8 +18,8 @@ class PluginQuestions extends Plugin
     
     public function Init()
     {
-        $this->Component_Add('media');
-        //$this->Viewer_AppendScript(Plugin::GetTemplatePath('questions'). '/assets/js/init.js');
+        $this->Component_Add('questions:answer');
+        $this->Viewer_AppendScript(Plugin::GetTemplatePath('questions'). '/assets/js/init.js');
     }
 
     public function Activate()
