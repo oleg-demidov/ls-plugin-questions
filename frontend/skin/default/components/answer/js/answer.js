@@ -18,7 +18,7 @@
         options: {
             selectors:{
                 tabForm:    "@[data-tab-answer-form]",
-                answerForm: ".answer-form",
+                answerForm: "@.answer-form",
                 btnEdit:    ".btn-edit",
                 answerText: ".answer-text"
             },
@@ -42,6 +42,7 @@
         edit:function(e){
             this.elements.tabForm.tab('show');
             this.elements.answerForm.find('.js-editor-answer').lsEditor('setText', this.elements.answerText.html());
+            this.elements.answerForm.append('<input type="hidden" name="id" value="'+this.element.data('id')+'"/>')
             e.preventDefault();
         }
         

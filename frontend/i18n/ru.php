@@ -30,6 +30,11 @@ return array(
         'title' => 'Ответы'
     ],
     'question' => [
+        'search_form' => [
+            'q' => [
+                'placeholder' => "Введите для поиска по тексту"
+            ]
+        ],
         'actions' => [
             'subscribe' => 'Подписаться',
             'like' => 'Нравится',

@@ -12,9 +12,9 @@
         
         <span class="mx-2">&bull;</span>
         <span class="text-muted">
-            <a href="{$oQuestion->getUrl()}" class="link">
-                {if $oQuestion->getCountAnswer()}
-                    {lang name='plugin.questions.question.answer' plural=true count=1}
+            <a href="{$oQuestion->getUrl()}" class="link {if $oQuestion->getCountAnswers()}text-success{/if}">
+                {if $oQuestion->getCountAnswers()}
+                    {lang name='plugin.questions.question.answer' plural=true count=$oQuestion->getCountAnswers()}
                 {else}
                     {lang name='plugin.questions.question.respond' }
                 {/if}

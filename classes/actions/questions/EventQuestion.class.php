@@ -49,22 +49,84 @@ class PluginQuestions_ActionQuestions_EventQuestion extends Event {
     
     public function EventList()
     {
-        $aFilter = [];
+        $aFilter = [
+            '#order' => ['date_create' => 'desc']
+        ];
         
-        $aCategoryUrl = array_merge([$this->sCurrentEvent], $this->GetParams());
+        $aCategoryUrl = [];
+        
+        $iPage = $this->GetPage($aCategoryUrl);
+        
         $oCategory = $this->Category_GetCategoryByUrlFull( join('/', $aCategoryUrl) );
         
+        $iCount = 0;
+        
         if($oCategory){
-            $aQuestionIds = $this->Category_GetTargetIdsByCategoriesId([$oCategory->getId()], 'questions', 1, 4);
-            if($aQuestionIds){
-                 $aFilter['id in'] = $aQuestionIds;
-            }
+            $aQuestionIds = $this->Category_GetTargetIdsByCategoriesId(
+                [$oCategory->getId()], 
+                'questions', 
+                $iPage, 
+                Config::Get('plugin.questions.question.per_page')
+            );
+            $iCount = $this->Category_GetCountFromTargetByFilter([
+                'category_id'    => $oCategory->getId(),
+                'target_type'    => 'questions']);
+            
+            $aFilter['id in'] = array_merge([0],$aQuestionIds);
+            
+        }else{
+            $aFilter['#page'] = [$iPage, Config::Get('plugin.questions.question.per_page')];
         }
         
+        if(getRequest('q')){
+            $aFilter['#where'] = [
+                '(t.text LIKE ? OR t.title LIKE ?)' => [
+                    '%'.getRequest('q').'%',
+                    '%'.getRequest('q').'%'                    
+                ]
+            ];
+        } //print_r($aFilter);print_r($oCategory);print_r($aCategoryUrl);
+
         $aQuestions = $this->PluginQuestions_Talk_GetQuestionItemsByFilter($aFilter); 
         
+        if(!$oCategory){
+            $iCount = $aQuestions['count'];
+            $aQuestions = $aQuestions['collection'];
+        } 
+        
+        $aPaging = $this->Viewer_MakePaging(
+            $iCount, 
+            $iPage, 
+            Config::Get('plugin.questions.question.per_page'), 
+            Config::Get('plugin.questions.question.count_pages'), 
+            Router::GetPath($this->sCurrentAction. '/' .join('/', $aCategoryUrl))
+        );
+                
         $this->Viewer_Assign('aQuestions', $aQuestions);
+        $this->Viewer_Assign('aPaging', $aPaging);
         $this->SetTemplateAction('question-list');
+    }
+    
+    protected function GetPage( &$aUrlWithoutPage ) {
+        if($iPage = $this->GetEventMatch(2)){
+            return $iPage;
+        }
+        $aUrlWithoutPage[] = $this->sCurrentEvent;
+        
+        if($iPage = $this->GetParamEventMatch(0, 2)){
+            return $iPage;
+        }
+        if($this->GetParam(0)){
+            $aUrlWithoutPage[] = $this->GetParam(0);
+        }
+        
+        if($iPage = $this->GetParamEventMatch(1, 2)){
+            return $iPage;
+        }
+        if($this->GetParam(1)){
+            $aUrlWithoutPage[] = $this->GetParam(1);
+        }
+        return 1;
     }
     
     public function EventView() {

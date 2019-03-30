@@ -10,7 +10,10 @@ $config['$root$']['db']['table']['questions_talk_answer'] = '___db.table.prefix_
  */
 $config['$root$']['router']['page']['questions'] = 'PluginQuestions_ActionQuestions';
 
-
+$config['question'] = [
+    'per_page' => 10,
+    'count_pages' => 5
+];
 
 $config['admin']['assets'] = [
     'js' => [
