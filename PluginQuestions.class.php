@@ -16,16 +16,29 @@ class PluginQuestions extends Plugin
 {
 
     
+
+
     public function Init()
     {
         $this->Component_Add('questions:answer');
         $this->Viewer_AppendScript(Plugin::GetTemplatePath('questions'). '/assets/js/init.js');
+
+        
     }
 
     public function Activate()
     {
         $this->Category_CreateTargetType('questions', 'Вопросы', array(), true);
 
+        if( in_array('like', array_keys(Engine::getInstance()->GetPlugins())) ){
+            $this->Message_AddError('Need depenccies PluginLike');
+            return false;
+        }
+        
+        $this->PluginLike_Like_CreateTarget(
+            'question',
+            'Вопросы'
+        );
         
         return true;
     }

@@ -17,6 +17,10 @@ class PluginQuestions_ModuleTalk_EntityQuestion extends EntityORM{
             'target_type' => 'questions',
             'form_field'  => 'category',
             'validate_require'               => true,
+        ),
+        'like' => array(
+            'class'       => 'PluginLike_ModuleLike_BehaviorEntity',
+            'target_type' => 'question'
         )
     );
 
