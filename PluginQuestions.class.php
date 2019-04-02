@@ -23,7 +23,6 @@ class PluginQuestions extends Plugin
         $this->Component_Add('questions:answer');
         $this->Viewer_AppendScript(Plugin::GetTemplatePath('questions'). '/assets/js/init.js');
 
-        
     }
 
     public function Activate()
@@ -38,6 +37,11 @@ class PluginQuestions extends Plugin
         $this->PluginLike_Like_CreateTarget(
             'question',
             'Вопросы'
+        );
+        
+        $this->PluginLike_Like_CreateTarget(
+            'answer',
+            'Ответы'
         );
         
         return true;

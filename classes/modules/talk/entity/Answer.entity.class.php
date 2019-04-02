@@ -10,6 +10,13 @@ class PluginQuestions_ModuleTalk_EntityAnswer extends EntityORM{
     
     protected $aValidateRules = [];
    
+    protected $aBehaviors = array(
+        
+        'like' => array(
+            'class'       => 'PluginLike_ModuleLike_BehaviorEntity',
+            'target_type' => 'answer'
+        )
+    );
 
     public function __construct($aParam = false)
     {

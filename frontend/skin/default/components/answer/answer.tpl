@@ -30,10 +30,10 @@
             <br>
             <div class="py-3 answer-text">{$oAnswer->getText()}</div>
             <div class="mt-3">
-                {component "bs-button" 
-                    bmods = "outline-success"
-                    icon = [icon => "thumbs-up", display => 'r', classes => 'mr-1']
-                    text = $aLang.plugin.questions.question.actions.like}
+                {component "like:like" 
+                    target  = $oAnswer
+                    bmods = "outline-success" 
+                    text= $aLang.plugin.questions.question.actions.like}
                     
                 {component "bs-button" 
                     popover = $aLang.plugin.questions.question.actions.complain
