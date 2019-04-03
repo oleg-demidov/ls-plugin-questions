@@ -40,10 +40,10 @@
                     bmods = "outline-success" 
                     text= $aLang.plugin.questions.question.actions.like}
                 
-               
-                {component "bs-button" 
-                    bmods = "outline-primary"
-                    text = $aLang.plugin.questions.question.actions.subscribe}
+                {component "subscribe:subscribe" 
+                    event  = $oEvent
+                    bmods = "outline-primary" 
+                    text= $aLang.plugin.questions.question.actions.subscribe}
                 
                 {component "bs-button" 
                     popover = $aLang.plugin.questions.question.actions.complain
