@@ -40,15 +40,17 @@
                     bmods = "outline-success" 
                     text= $aLang.plugin.questions.question.actions.like}
                 
-                {component "subscribe:subscribe" 
-                    event  = $oEvent
-                    bmods = "outline-primary" 
-                    text= $aLang.plugin.questions.question.actions.subscribe}
+               
+                {insert name='block' block='subscribe' params=[ 
+                    plugin  => 'subscribe',
+                    event   => 'add_answer',
+                    target_title => $oQuestion->getTitle()
+                ]}
                 
-                {component "bs-button" 
+                {*{component "bs-button" 
                     popover = $aLang.plugin.questions.question.actions.complain
                     bmods = "outline-danger"
-                    icon = "ban"}
+                    icon = "ban"}*}
             </div>
         </div>
     </div>

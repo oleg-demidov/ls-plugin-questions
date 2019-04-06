@@ -71,6 +71,8 @@ class PluginQuestions_ActionQuestions_EventAnswer extends Event {
 //                        ['oResponse' => $oAnswer], null, true
 //                    );
                 }
+
+                $this->Hook_Run('add_answer', array('oAnswer' => 'kk'));
                 
                 if(getRequest('photos')){
                     $this->Media_AttachMedia(getRequest('photos'), 'question', $oAnswer->getId());

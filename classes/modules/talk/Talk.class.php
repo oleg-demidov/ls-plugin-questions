@@ -24,4 +24,7 @@ class PluginQuestions_ModuleTalk extends ModuleORM
         parent::Init();
     }
     
+    public function SubscribeEventAnswer($aUserIds, $aParams) {
+        $this->Logger_Notice("SubscribeEventAnswer " . print_r($aParams, true). print_r($aUserIds, true));
+    }
 }
