@@ -44,7 +44,7 @@
                 {insert name='block' block='subscribe' params=[ 
                     plugin  => 'subscribe',
                     event   => 'add_answer',
-                    target_title => $oQuestion->getTitle()
+                    target_id => $oQuestion->getId()
                 ]}
                 
                 {*{component "bs-button" 
