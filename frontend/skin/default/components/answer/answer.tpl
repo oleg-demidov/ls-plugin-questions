@@ -17,7 +17,7 @@
 
 
 
-            {if $oUserCurrent and $oUserCurrent->getId() == $oAnswer->getAuthor()->getId() or $oUserCurrent->isAdministrator()}
+            {if $oUserCurrent and ($oUserCurrent->getId() == $oAnswer->getAuthor()->getId() or $oUserCurrent->isAdministrator())}
                 <span class="mx-2">&bull;</span>
                 {component "bs-button" 
                     classes = "btn-edit"

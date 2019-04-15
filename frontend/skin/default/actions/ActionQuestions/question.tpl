@@ -20,7 +20,7 @@
 
 
 
-            {if $oUserCurrent and $oUserCurrent->getId() == $oQuestion->getAuthor()->getId() or $oUserCurrent->isAdministrator()}
+            {if $oUserCurrent and ($oUserCurrent->getId() == $oQuestion->getAuthor()->getId() or $oUserCurrent->isAdministrator())}
                 <span class="mx-2">&bull;</span>
                 {component "bs-button" 
                     com     = "link"
@@ -55,18 +55,9 @@
         </div>
     </div>
             
-   {capture name="form_answer"}
-        <div class="d-flex flex-md-row flex-column ml-3"> 
-            <div class="pr-3 pb-3" >
-                <img class="rounded-circle" src="{$oUserCurrent->getProfileAvatar()}" alt="{$oUserCurrent->getLogin()}">
-            </div>
-            <div class="flex-fill">
-                {component "questions:answer.form"
-                    question_id = $oQuestion->getId()
-                    oAnswer     = $oAnswerEntity}
-            </div>
-        </div>
-    {/capture}
+   
+    
+    {$itemsTabs = []}
     
     {capture name="answers"}
         {foreach $oQuestion->getAnswers() as $oAnswer}
@@ -79,20 +70,38 @@
         {/if}
     {/capture}
     
-    {component "bs-tabs" bmods="tabs" classes="mt-5" contentClasses="mt-4" activeItem="answers" items = [
-        [ 
+    {$itemsTabs[] = [ 
+        text => $aLang.plugin.questions.answer.answers , 
+        content => $smarty.capture.answers, 
+        name => 'answers',
+        badge => $oQuestion->getCountAnswers()
+    ]}
+    
+    {if $oUserCurrent}
+        {capture name="form_answer"}
+            <div class="d-flex flex-md-row flex-column ml-3"> 
+                <div class="pr-3 pb-3" >
+                    <img class="rounded-circle" src="{$oUserCurrent->getProfileAvatar()}" alt="{$oUserCurrent->getLogin()}">
+                </div>
+                <div class="flex-fill">
+                    {component "questions:answer.form"
+                        question_id = $oQuestion->getId()
+                        oAnswer     = $oAnswerEntity}
+                </div>
+            </div>
+        {/capture}
+        
+        {$itemsTabs[] = [ 
             text => $aLang.plugin.questions.answer.answers , 
             content => $smarty.capture.answers, 
             name => 'answers',
             badge => $oQuestion->getCountAnswers()
-        ],
-        [ 
-            attributes => ['data-tab-answer-form' => true],
-            text => $aLang.plugin.questions.answer.answered , 
-            content => $smarty.capture.form_answer, 
-            name => 'form'
-        ]
-    ]}
+        ]}
+    {/if}
+
+    
+    
+    {component "bs-tabs" bmods="tabs" classes="mt-5" contentClasses="mt-4" activeItem="answers" items = $itemsTabs}
     
     
 
