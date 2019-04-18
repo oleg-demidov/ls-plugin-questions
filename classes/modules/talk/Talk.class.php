@@ -16,7 +16,8 @@ class PluginQuestions_ModuleTalk extends ModuleORM
         'like' => [
             'class'     => 'PluginLike_ModuleLike_BehaviorModule',
             'target_type'   => 'question'
-        ]
+        ],
+        'moderation' => 'PluginModeration_ModuleModeration_BehaviorModule'
     );
 
     public function Init()

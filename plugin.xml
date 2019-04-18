@@ -12,6 +12,7 @@
 	<requires>
 		<livestreet>2.0.1</livestreet>
 		<plugins>
+                    <moderation>1.0.0</moderation>
 		</plugins>
 	</requires>
 	<description>

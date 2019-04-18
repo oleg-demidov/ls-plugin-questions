@@ -15,7 +15,13 @@ class PluginQuestions_ModuleTalk_EntityAnswer extends EntityORM{
         'like' => array(
             'class'       => 'PluginLike_ModuleLike_BehaviorEntity',
             'target_type' => 'answer'
-        )
+        ),
+        'moderation' => [
+            'class' => 'PluginModeration_ModuleModeration_BehaviorEntity',
+            'moderation_fields' => [
+                'text'
+            ]
+        ]
     );
 
     public function __construct($aParam = false)

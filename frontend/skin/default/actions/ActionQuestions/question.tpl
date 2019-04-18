@@ -92,10 +92,9 @@
         {/capture}
         
         {$itemsTabs[] = [ 
-            text => $aLang.plugin.questions.answer.answers , 
-            content => $smarty.capture.answers, 
-            name => 'answers',
-            badge => $oQuestion->getCountAnswers()
+            text => $aLang.plugin.questions.question.respond , 
+            content => $smarty.capture.form_answer, 
+            name => 'form_answer'
         ]}
     {/if}
 
