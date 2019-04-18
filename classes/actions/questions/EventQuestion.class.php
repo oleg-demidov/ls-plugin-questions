@@ -130,14 +130,22 @@ class PluginQuestions_ActionQuestions_EventQuestion extends Event {
     }
     
     public function EventView() {
+        $this->SetTemplateAction('question');
+        
         $oQuestion = $this->PluginQuestions_Talk_GetQuestionByFilter([
             '#where' => ['t.id = ?d OR t.url = ?' => [$this->GetEventMatch(1), $this->GetEventMatch(1)]]
         ]);
         
+        if(!$oQuestion->moderation->isModerated()){
+            $this->SetTemplateAction('question-moderation');
+            $this->Viewer_ClearBlocksAll();
+        }
+        
         $this->Viewer_Assign('oQuestion', $oQuestion);
         $this->Viewer_Assign('oAnswerEntity', Engine::GetEntity('PluginQuestions_Talk_Answer'));
-        $this->SetTemplateAction('question');
+        
     }
+    
         
     public function EventEditAjax() {
         
