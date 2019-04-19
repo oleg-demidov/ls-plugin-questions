@@ -20,7 +20,8 @@ class PluginQuestions_ModuleTalk_EntityAnswer extends EntityORM{
             'class' => 'PluginModeration_ModuleModeration_BehaviorEntity',
             'moderation_fields' => [
                 'text'
-            ]
+            ],
+            'title_field' => 'id'
         ]
     );
 
