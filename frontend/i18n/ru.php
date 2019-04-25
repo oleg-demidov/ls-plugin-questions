@@ -35,6 +35,10 @@ return array(
                 'placeholder' => "Введите для поиска по тексту"
             ]
         ],
+        'order' => [
+            'date' => 'Дате',
+            'rating' => 'Рейтингу'
+        ],
         'actions' => [
             'subscribe' => 'Подписаться',
             'like' => 'Нравится',
@@ -44,9 +48,6 @@ return array(
         'respond' => 'Ответить',
         'blankslate' => [
             'text' => 'Вoпросов нет'
-        ],
-        'modertion' => [
-            'text' => 'Спасибо за ваш вопрос. Ваш вопрос %%title%% отправлен на модерацию.'
         ]
     ],
     
@@ -90,6 +91,9 @@ return array(
         ],
         'notice' => [
             'error_double_text' => 'Ответ с таким текстом уже существует'
+        ],
+        'best_btn' => [
+            'text' => 'Лучший ответ'
         ]
     ],
 );

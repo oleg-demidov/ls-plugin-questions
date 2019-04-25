@@ -60,8 +60,14 @@
     {$itemsTabs = []}
     
     {capture name="answers"}
-        {foreach $oQuestion->getAnswers() as $oAnswer}
-            {component 'questions:answer' oAnswer=$oAnswer}
+        {foreach $oQuestion->getAnswers() as $oAnswer name="answers"}
+            {component 'questions:answer' 
+                classes = "ml-3 mt-4"
+                oAnswer = $oAnswer}
+            {if !$smarty.foreach.answers.last}
+                <hr>
+            {/if}
+
         {/foreach}
         {if !$oQuestion->getCountAnswers()}
             {component "blankslate" 

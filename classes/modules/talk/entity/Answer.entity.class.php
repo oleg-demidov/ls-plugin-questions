@@ -8,27 +8,31 @@
  */
 class PluginQuestions_ModuleTalk_EntityAnswer extends EntityORM{
     
+    const STATE_BEST = 3;
+
+
     protected $aValidateRules = [];
    
     protected $aBehaviors = array(
         
         'like' => array(
             'class'       => 'PluginLike_ModuleLike_BehaviorEntity',
-            'target_type' => 'answer'
+            'target_type' => 'answer',
+            'title_field' => 'title',
         ),
         'moderation' => [
             'class' => 'PluginModeration_ModuleModeration_BehaviorEntity',
             'moderation_fields' => [
                 'text'
             ],
-            'title_field' => 'id'
+            'title_field' => 'id',
+            'label' => 'Ответ'
         ]
     );
 
     public function __construct($aParam = false)
     {
         parent::__construct($aParam);
-        
         
         $this->aValidateRules[] =   array(
             'user_id', 
@@ -129,5 +133,15 @@ class PluginQuestions_ModuleTalk_EntityAnswer extends EntityORM{
        
     }
     
+    public function getUrl() {
+        return $this->getQuestion()->getUrl().'#ans'.$this->getId();
+    }
     
+    public function getTitle() {
+        return func_text_words($this->getText(), 3).'...';
+    }
+    
+    public function isBest() {
+        return ($this->getState() == self::STATE_BEST);
+    }
 }

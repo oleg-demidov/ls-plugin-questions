@@ -6,7 +6,8 @@
     },
     "templates": {
         "answer": "answer.tpl",
-        "form": "answer-form.tpl"
+        "form": "answer-form.tpl",
+        "best-btn":"best-btn.tpl"
     },
     "scripts":{
         "answer":"js/answer.js"

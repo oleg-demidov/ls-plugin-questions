@@ -43,7 +43,6 @@ class PluginQuestions_ActionQuestions_EventAnswer extends Event {
         
         if(!$oAnswer = $this->PluginQuestions_Talk_GetAnswerById( getRequest('id'))){
             $oAnswer = Engine::GetEntity('PluginQuestions_Talk_Answer');
-            $oAnswer->setState('moderate');
             $oAnswer->_setValidateScenario('create');
             
         }else{
@@ -60,18 +59,7 @@ class PluginQuestions_ActionQuestions_EventAnswer extends Event {
         
         if($oAnswer->_Validate()){
             if($oAnswer->Save()){
-                /*
-                 * На модерацию
-                 */
-                if($oAnswer->getState() == 'moderate'){
-//                    $this->Notify_Send(
-//                        $oAnswer->getUser(),
-//                        'response_new.tpl',
-//                        $this->Lang_Get('emails.response_new.subject'),
-//                        ['oResponse' => $oAnswer], null, true
-//                    );
-                }
-
+                
                 $this->Hook_Run('add_answer', array('oAnswer' => 'kk'));
                 
                 if(getRequest('photos')){
@@ -82,7 +70,11 @@ class PluginQuestions_ActionQuestions_EventAnswer extends Event {
                 
                 $this->Viewer_AssignAjax('sUrlRedirect', $oAnswer->getQuestion()->getUrl());
                 
-                $this->Message_AddNotice($this->Lang_Get('common.success.save'));
+                if(!$oAnswer->moderation->isModerated()){
+                    $this->Message_AddNotice($this->Lang_Get('common.success.save'));
+                }else{
+                    $this->Message_AddNotice($this->Lang_Get('common.success.save'));
+                }
             }else{
                 $this->Message_AddError($this->Lang_Get('common.error.error'));
             }

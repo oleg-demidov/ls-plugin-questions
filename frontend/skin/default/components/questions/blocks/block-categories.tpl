@@ -3,7 +3,7 @@
 {foreach $aCategories as $category}
     {$items[] = [
         'text' => $category.entity->getTitle(),
-        'url'  => $category.entity->getUrl()
+        'url'  => {router page="questions/{$category.entity->getUrl()}"}
     ]}
 {/foreach}
 

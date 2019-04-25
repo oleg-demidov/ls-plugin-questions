@@ -49,9 +49,18 @@ class PluginQuestions_ActionQuestions_EventQuestion extends Event {
     
     public function EventList()
     {
-        $aFilter = [
-            '#order' => ['date_create' => 'desc']
-        ];
+        $aFilter = [];
+        $aGetParamsList = [];
+        
+        if(getRequest('order')){
+            $aGetParamsList['order'] = getRequest('order');
+        }
+                
+        if(getRequest('q')){
+            $aGetParamsList['q'] = getRequest('q');
+        }
+        
+        $aFilter['#order'] = [getRequest('order', '#count_like') => 'desc'];
         
         $aCategoryUrl = [];
         
@@ -85,7 +94,7 @@ class PluginQuestions_ActionQuestions_EventQuestion extends Event {
                     '%'.getRequest('q').'%'                    
                 ]
             ];
-        } //print_r($aFilter);print_r($oCategory);print_r($aCategoryUrl);
+        }
 
         $aQuestions = $this->PluginQuestions_Talk_GetQuestionItemsByFilter($aFilter); 
         
@@ -99,7 +108,8 @@ class PluginQuestions_ActionQuestions_EventQuestion extends Event {
             $iPage, 
             Config::Get('plugin.questions.question.per_page'), 
             Config::Get('plugin.questions.question.count_pages'), 
-            Router::GetPath($this->sCurrentAction. '/' .join('/', $aCategoryUrl))
+            Router::GetPath($this->sCurrentAction. '/' .join('/', $aCategoryUrl)),
+            $aGetParamsList
         );
                 
         $this->Viewer_Assign('aQuestions', $aQuestions);
@@ -136,10 +146,10 @@ class PluginQuestions_ActionQuestions_EventQuestion extends Event {
             '#where' => ['t.id = ?d OR t.url = ?' => [$this->GetEventMatch(1), $this->GetEventMatch(1)]]
         ]);
         
-        if(!$oQuestion->moderation->isModerated()){
-            $this->SetTemplateAction('question-moderation');
-            $this->Viewer_ClearBlocksAll();
-        }
+//        if(!$oQuestion->moderation->isModerated()){
+//            $this->SetTemplateAction('question-moderation');
+//            $this->Viewer_ClearBlocksAll();
+//        }
         
         $this->Viewer_Assign('oQuestion', $oQuestion);
         $this->Viewer_Assign('oAnswerEntity', Engine::GetEntity('PluginQuestions_Talk_Answer'));

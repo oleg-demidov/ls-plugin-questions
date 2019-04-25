@@ -20,14 +20,16 @@ class PluginQuestions_ModuleTalk_EntityQuestion extends EntityORM{
         ),
         'like' => array(
             'class'       => 'PluginLike_ModuleLike_BehaviorEntity',
-            'target_type' => 'question'
+            'target_type' => 'question',
+            'title_field' => 'title',
         ),
         'moderation' => [
             'class' => 'PluginModeration_ModuleModeration_BehaviorEntity',
             'moderation_fields' => [
                 'title', 'url', 'text'
             ],
-            'title_field' => 'title'
+            'title_field' => 'title',
+            'label' => 'Вопрос'
         ]
     );
 

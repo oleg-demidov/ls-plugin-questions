@@ -16,6 +16,30 @@
             name="q" 
             placeholder=$aLang.plugin.questions.question.search_form.q.placeholder}
     </form>
+    
+    <div class="d-flex"> 
+        <div class="pt-1 pr-2">
+            Сортировать по:
+        </div>
+
+        {component "bs-nav" 
+            activeItem = $_aRequest['order']
+            bmods = "pills sm"
+            items = [
+                [
+                    classes => "py-1 px-3",
+                    name => "#count_like",
+                    text => $aLang.plugin.questions.question.order.rating,
+                    url  => "{$aPaging['sBaseUrl']}?{if $_aRequest.q}q={$_aRequest.q}{/if}&order=%23count_like"
+                ],
+                [
+                    classes => "py-1 px-3",
+                    name => "date_create",
+                    text => $aLang.plugin.questions.question.order.date,
+                    url  => "{$aPaging['sBaseUrl']}?{if $_aRequest.q}q={$_aRequest.q}{/if}&order=date_create"
+                ]
+            ]}
+    </div>
 
     <div class="mt-4">
         {foreach name="questions" from=$aQuestions  item='oQuestion'}

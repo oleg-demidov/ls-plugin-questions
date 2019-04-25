@@ -37,12 +37,12 @@ class PluginQuestions extends Plugin
         }
         
         $this->PluginLike_Like_CreateTarget(
-            'question',
+            'PluginQuestions_ModuleTalk_EntityQuestion',
             'Вопросы'
         );
         
         $this->PluginLike_Like_CreateTarget(
-            'answer',
+            'PluginQuestions_ModuleTalk_EntityAnswer',
             'Ответы'
         );
         

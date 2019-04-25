@@ -2,9 +2,9 @@
  * Предложение
  *}
  
-{component_define_params params=[ 'oAnswer']}
+{component_define_params params=[ 'oAnswer', 'classes']}
 
-<div class="answer ml-3 d-flex flex-md-row flex-column" data-id="{$oAnswer->getId()}">
+<div id="ans{$oAnswer->getId()}" class="answer {$classes} d-flex flex-md-row flex-column" data-id="{$oAnswer->getId()}">
         <div class="pb-3">
             <img  class="mr-3 rounded-circle" src="{$oAnswer->getAuthor()->getProfileAvatar()}" alt="{$oAnswer->getAuthor()->getLogin()}">
         </div>
@@ -34,11 +34,8 @@
                     target  = $oAnswer
                     bmods = "outline-success" 
                     text= $aLang.plugin.questions.question.actions.like}
-                    
-                {component "bs-button" 
-                    popover = $aLang.plugin.questions.question.actions.complain
-                    bmods = "outline-danger"
-                    icon = "ban"}
+                 
+                {component "questions:answer.best-btn" oAnswer=$oAnswer}
             </div>
         </div>
     </div>
