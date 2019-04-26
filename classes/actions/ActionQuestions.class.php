@@ -44,7 +44,8 @@ class PluginQuestions_ActionQuestions extends ActionPlugin
     {        
         
         $this->RegisterEventExternal('Answer', 'PluginQuestions_ActionQuestions_EventAnswer');
-        $this->AddEventPreg('/^(add|edit)-answer-ajax$/i', 'Answer::EventEditAjax');    
+        $this->AddEventPreg('/^(add|edit)-answer-ajax$/i', 'Answer::EventEditAjax');
+        $this->AddEventPreg('/^ajax-answer-best/i', 'Answer::EventAjaxBest');
         
         $this->RegisterEventExternal('Question', 'PluginQuestions_ActionQuestions_EventQuestion');
         $this->AddEventPreg('/^(add|edit)-question$/i', '/^([1-9]\d{0,10})?$/i', ['Question::EventEdit', 'edit_question']);

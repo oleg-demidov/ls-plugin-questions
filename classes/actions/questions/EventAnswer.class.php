@@ -85,7 +85,23 @@ class PluginQuestions_ActionQuestions_EventAnswer extends Event {
         }
     }
     
-    
+    public function EventAjaxBest() {
+        $this->Viewer_SetResponseAjax('json');
+        if(!$oAnswer = $this->PluginQuestions_Talk_GetAnswerById( getRequest('id'))){
+            $this->Message_AddError($this->Lang_Get('plugin.questions.answer.notice.error_not_found'));
+            return;
+        }
+        
+        if(!getRequest('state')){
+            $oAnswer->setBest();
+        }else{
+            $oAnswer->setState(0);
+        }
+        
+        $oAnswer->Save();
+        
+        $this->Viewer_AssignAjax('state', $oAnswer->isBest());
+    }
     
     public function EventDelete() {
         if(!$oMessage = $this->Talk_GetMessageById(getRequest('id'))){

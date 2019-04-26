@@ -133,6 +133,10 @@ class PluginQuestions_ModuleTalk_EntityAnswer extends EntityORM{
        
     }
     
+    public function setBest() {
+        $this->setState(self::STATE_BEST);
+    }
+    
     public function getUrl() {
         return $this->getQuestion()->getUrl().'#ans'.$this->getId();
     }

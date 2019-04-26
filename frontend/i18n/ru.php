@@ -90,7 +90,8 @@ return array(
             ]
         ],
         'notice' => [
-            'error_double_text' => 'Ответ с таким текстом уже существует'
+            'error_double_text' => 'Ответ с таким текстом уже существует',
+            'error_not_found' => 'Ответ не найден'
         ],
         'best_btn' => [
             'text' => 'Лучший ответ'

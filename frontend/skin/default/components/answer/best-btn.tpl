@@ -10,9 +10,11 @@
         {$target_id = $oAnswer->getId()}
     {/if}
         
-    {$attributes['data-btn-ajax'] = true}
+    {$attributes['data-btn'] = true}
+    {$attributes['data-best-btn'] = true}
     {$attributes['data-param-state'] = {$state|default:0}}
-    {$attributes['data-loading-text'] = "<i class='fa fa-circle-o-notch fa-spin'></i> {$text}"}
+    {$attributes['data-param-id'] = $oAnswer->getId()}
+    {$attributes['data-url'] = {router page="questions/ajax-answer-best"}}
     
     {if $state}
         {$classes = "active"}

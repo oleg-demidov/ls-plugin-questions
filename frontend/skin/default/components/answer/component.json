@@ -10,6 +10,7 @@
         "best-btn":"best-btn.tpl"
     },
     "scripts":{
-        "answer":"js/answer.js"
+        "answer":"js/answer.js",
+        "best-btn":"js/best-btn.js"
     }
 }

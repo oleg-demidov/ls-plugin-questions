@@ -2,7 +2,7 @@
  * Предложение
  *}
  
-{component_define_params params=[ 'oAnswer', 'classes']}
+{component_define_params params=[ 'oAnswer', 'classes', 'withBestBtn']}
 
 <div id="ans{$oAnswer->getId()}" class="answer {$classes} d-flex flex-md-row flex-column" data-id="{$oAnswer->getId()}">
         <div class="pb-3">
@@ -34,8 +34,11 @@
                     target  = $oAnswer
                     bmods = "outline-success" 
                     text= $aLang.plugin.questions.question.actions.like}
-                 
-                {component "questions:answer.best-btn" oAnswer=$oAnswer}
+                    
+                {if $withBestBtn}
+                    {component "questions:answer.best-btn" oAnswer=$oAnswer}
+                {/if}
+                
             </div>
         </div>
     </div>

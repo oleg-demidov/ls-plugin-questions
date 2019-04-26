@@ -62,6 +62,7 @@
     {capture name="answers"}
         {foreach $oQuestion->getAnswers() as $oAnswer name="answers"}
             {component 'questions:answer' 
+                withBestBtn = ($oUserCurrent and ($oUserCurrent->getId() == $oQuestion->getAuthor()->getId()) ) 
                 classes = "ml-3 mt-4"
                 oAnswer = $oAnswer}
             {if !$smarty.foreach.answers.last}
