@@ -37,6 +37,10 @@
                     
                 {if $withBestBtn}
                     {component "questions:answer.best-btn" oAnswer=$oAnswer}
+                {else}
+                    {if $oAnswer->isBest()}
+                        {component "questions:answer.best-btn" oAnswer=$oAnswer static=true}
+                    {/if}
                 {/if}
                 
             </div>

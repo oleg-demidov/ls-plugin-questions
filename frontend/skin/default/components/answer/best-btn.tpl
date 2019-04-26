@@ -1,7 +1,7 @@
 {extends "component@bs-button"}
 
 {block 'button_options'}
-    {component_define_params params=[ 'oAnswer' ]}
+    {component_define_params params=[ 'oAnswer', 'static' ]}
     
     {$icon = [icon => "heart", display => 's', classes => 'mr-1']}
     
@@ -9,14 +9,17 @@
         {$state = $oAnswer->isBest()}
         {$target_id = $oAnswer->getId()}
     {/if}
-        
-    {$attributes['data-btn'] = true}
-    {$attributes['data-best-btn'] = true}
+    
+    {if !$static}
+        {$attributes['data-btn'] = true}
+        {$attributes['data-best-btn'] = true}
+    {/if}
+
     {$attributes['data-param-state'] = {$state|default:0}}
     {$attributes['data-param-id'] = $oAnswer->getId()}
     {$attributes['data-url'] = {router page="questions/ajax-answer-best"}}
     
-    {if $state}
+    {if $state OR $static}
         {$classes = "active"}
     {/if}
     
