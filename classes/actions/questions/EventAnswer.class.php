@@ -53,6 +53,11 @@ class PluginQuestions_ActionQuestions_EventAnswer extends Event {
             $oAnswer->_setValidateScenario('edit');
         }
         
+        if($oAnswer->_isNew() and $oAnswer->getQuestion()->isClosed()){
+            $this->Message_AddError($this->Lang_Get('plugin.questions.answer.error_question_closed'));
+            return;
+        }
+        
         $oAnswer->_setDataSafe($_REQUEST);
         $oAnswer->setUserId($this->oUserCurrent->getId());
         $oAnswer->setText($this->Text_Parser($oAnswer->getText()));
@@ -92,10 +97,27 @@ class PluginQuestions_ActionQuestions_EventAnswer extends Event {
             return;
         }
         
+        $oQuestion = $oAnswer->getQuestion();
+        
         if(!getRequest('state')){
             $oAnswer->setBest();
+            
+            $oQuestion->setState(PluginQuestions_ModuleTalk_EntityQuestion::STATE_CLOSE);
+            $oQuestion->Save();
+            
+            $aAnswers = $oQuestion->getAnswers(['state' => PluginQuestions_ModuleTalk_EntityAnswer::STATE_BEST]);
+            foreach ($aAnswers as $oAns){
+                $oAns->setState(0);
+                $oAns->Save();
+            }
+            $this->Message_AddNotice($this->Lang_Get('plugin.questions.answer.notice.select_best_answer'));
         }else{
             $oAnswer->setState(0);
+            
+            $oQuestion->setState(PluginQuestions_ModuleTalk_EntityQuestion::STATE_OPEN);
+            $oQuestion->Save();
+            
+            $this->Message_AddNotice($this->Lang_Get('plugin.questions.answer.notice.delete_best_answer'));
         }
         
         $oAnswer->Save();

@@ -163,7 +163,6 @@ class PluginQuestions_ActionQuestions_EventQuestion extends Event {
         
         if(!$oQuestion = $this->PluginQuestions_Talk_GetQuestionById( getRequest('id'))){
             $oQuestion = Engine::GetEntity('PluginQuestions_Talk_Question');
-            $oQuestion->setState('moderate');
             $oQuestion->_setValidateScenario('create');
             
         }else{
@@ -181,17 +180,7 @@ class PluginQuestions_ActionQuestions_EventQuestion extends Event {
         
         if($oQuestion->_Validate()){
             if($oQuestion->Save()){
-                /*
-                 * На модерацию
-                 */
-                if($oQuestion->getState() == 'moderate'){
-//                    $this->Notify_Send(
-//                        $oQuestion->getUser(),
-//                        'response_new.tpl',
-//                        $this->Lang_Get('emails.response_new.subject'),
-//                        ['oResponse' => $oQuestion], null, true
-//                    );
-                }
+                
                 
                 if(getRequest('photos')){
                     $this->Media_AttachMedia(getRequest('photos'), 'question', $oQuestion->getId());

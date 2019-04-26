@@ -49,7 +49,7 @@
                 this.option('params.state', response.state);
                 if(response.state){
                     this.element.bsButton('active');
-                    this.elements.bestButtons.not(this.element).hide();
+                    this.elements.bestButtons.not(this.element).bsButton('deactive').hide();
                 }else{
                     this.element.bsButton('deactive');
                     this.elements.bestButtons.show();

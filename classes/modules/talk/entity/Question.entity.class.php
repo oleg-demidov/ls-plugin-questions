@@ -10,6 +10,11 @@ class PluginQuestions_ModuleTalk_EntityQuestion extends EntityORM{
     
     protected $aValidateRules = [];
     
+    const STATE_CLOSE = 2;
+    
+    const STATE_OPEN = 1;
+
+
     protected $aBehaviors = array(
         // Категории
         'category' => array(
@@ -152,16 +157,22 @@ class PluginQuestions_ModuleTalk_EntityQuestion extends EntityORM{
     
     public function afterDelete() {
         /*
-         * Удалить потомков
-         */
-        
-        
-        /*
          * Удалить медиа
          */        
         $this->Media_RemoveTargetByTypeAndId('question', $this->getId());
        
     }
     
+    public function getAnswersOrder() {
+        return $this->getAnswers([
+            '#order' => [
+                'state' => 'desc',
+                '#count_like' => 'desc'
+            ]
+        ]);
+    }
     
+    public function isClosed() {
+        return (self::STATE_CLOSE == $this->getState());
+    }
 }

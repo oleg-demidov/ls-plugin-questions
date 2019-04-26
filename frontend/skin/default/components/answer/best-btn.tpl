@@ -1,11 +1,11 @@
 {extends "component@bs-button"}
 
-{block 'button_options'}
+{block 'button_options' }
     {component_define_params params=[ 'oAnswer', 'static' ]}
     
     {$icon = [icon => "heart", display => 's', classes => 'mr-1']}
     
-    {if $target}
+    {if $oAnswer}
         {$state = $oAnswer->isBest()}
         {$target_id = $oAnswer->getId()}
     {/if}
@@ -21,6 +21,10 @@
     
     {if $state OR $static}
         {$classes = "active"}
+    {/if}
+    
+    {if !$state}
+        {$attributes['style'] = "display: none;"}
     {/if}
     
     {$text = $aLang.plugin.questions.answer.best_btn.text}

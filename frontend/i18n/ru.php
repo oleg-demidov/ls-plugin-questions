@@ -90,6 +90,9 @@ return array(
             ]
         ],
         'notice' => [
+            'error_question_closed' => 'Вы больше не можете оставлять ответы на этот вопрос',
+            'select_best_answer' => 'Вы выбрали лучший ответ',
+            'delete_best_answer' => 'Ответ убран из лучших',
             'error_double_text' => 'Ответ с таким текстом уже существует',
             'error_not_found' => 'Ответ не найден'
         ],

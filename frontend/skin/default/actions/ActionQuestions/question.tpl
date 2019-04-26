@@ -60,7 +60,7 @@
     {$itemsTabs = []}
     
     {capture name="answers"}
-        {foreach $oQuestion->getAnswers() as $oAnswer name="answers"}
+        {foreach $oQuestion->getAnswersOrder() as $oAnswer name="answers"}
             {component 'questions:answer' 
                 withBestBtn = ($oUserCurrent and ($oUserCurrent->getId() == $oQuestion->getAuthor()->getId()) ) 
                 classes = "ml-3 mt-4"
