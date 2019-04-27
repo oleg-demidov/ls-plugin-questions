@@ -101,7 +101,8 @@
         {$itemsTabs[] = [ 
             text => $aLang.plugin.questions.question.respond , 
             content => $smarty.capture.form_answer, 
-            name => 'form_answer'
+            name => 'form_answer',
+            attributes => ['data-tab-answer-form' => true]
         ]}
     {/if}
 

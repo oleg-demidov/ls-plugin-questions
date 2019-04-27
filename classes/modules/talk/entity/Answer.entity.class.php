@@ -25,7 +25,7 @@ class PluginQuestions_ModuleTalk_EntityAnswer extends EntityORM{
             'moderation_fields' => [
                 'text'
             ],
-            'title_field' => 'id',
+            'title_field' => 'title',
             'label' => 'Ответ'
         ]
     );
@@ -47,10 +47,10 @@ class PluginQuestions_ModuleTalk_EntityAnswer extends EntityORM{
         $this->aValidateRules[] =    array(
             'text', 
             'string', 
-            'max' => 200, 
+            'max' => 2000, 
             'min' => 10, 
             'allowEmpty' => false,
-            'msg' => $this->Lang_Get('talk.response.form.text.error_validate', ['min' => 10, 'max' => 200]),
+            'msg' => $this->Lang_Get('talk.response.form.text.error_validate', ['min' => 10, 'max' => 2000]),
             'on' => [ 'edit', 'create']
         );
         $this->aValidateRules[] =    array(

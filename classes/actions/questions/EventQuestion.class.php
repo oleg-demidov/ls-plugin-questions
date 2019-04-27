@@ -62,6 +62,8 @@ class PluginQuestions_ActionQuestions_EventQuestion extends Event {
         
         $aFilter['#order'] = [getRequest('order', '#count_like') => 'desc'];
         
+        $_REQUEST['order'] = getRequest('order', '#count_like');
+        
         $aCategoryUrl = [];
         
         $iPage = $this->GetPage($aCategoryUrl);

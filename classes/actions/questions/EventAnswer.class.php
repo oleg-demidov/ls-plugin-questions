@@ -53,7 +53,7 @@ class PluginQuestions_ActionQuestions_EventAnswer extends Event {
             $oAnswer->_setValidateScenario('edit');
         }
         
-        if($oAnswer->_isNew() and $oAnswer->getQuestion()->isClosed()){
+        if(!$oAnswer->_isNew() and $oAnswer->getQuestion()->isClosed()){
             $this->Message_AddError($this->Lang_Get('plugin.questions.answer.error_question_closed'));
             return;
         }
