@@ -1,7 +1,7 @@
 {extends "component@bs-button"}
 
 {block 'button_options' }
-    {component_define_params params=[ 'oAnswer', 'static' ]}
+    {component_define_params params=[ 'oAnswer', 'static', 'noBestHide' ]}
     
     {$icon = [icon => "heart", display => 's', classes => 'mr-1']}
     
@@ -23,7 +23,7 @@
         {$classes = "active"}
     {/if}
     
-    {if !$state}
+    {if !$state and $noBestHide}
         {$attributes['style'] = "display: none;"}
     {/if}
     

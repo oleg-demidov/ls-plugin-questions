@@ -100,6 +100,12 @@ return array(
             'text' => 'Лучший ответ'
         ]
     ],
+    'emails' => [
+        'add_answer' => [
+            'subject' => 'Новый ответ',
+            'text' => 'Новый ответ на вопрос %%question%%'
+        ]
+    ]
 );
 
 ?>

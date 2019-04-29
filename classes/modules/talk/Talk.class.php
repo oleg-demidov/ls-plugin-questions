@@ -25,7 +25,29 @@ class PluginQuestions_ModuleTalk extends ModuleORM
         parent::Init();
     }
     
-    public function SubscribeEventAnswer($aUserIds, $aParams) {
-        $this->Logger_Notice("SubscribeEventAnswer " . print_r($aParams, true). print_r($aUserIds, true));
+    public function CallbackEventAnswer($aUserIds, $aParams) {
+        
+        $aUsers = $this->User_GetUserItemsByFilter(['id in' => $aUserIds]);
+        if(!$aUsers){
+            return;
+        }
+        
+        foreach ($aUsers as $oUser) {
+            /*
+             * Оповещение
+             */
+            $this->Notify_Send(
+                $oUser,
+                'add_answer.tpl',
+                $this->Lang_Get('plugin.questions.emails.add_answer.subject'),
+                [
+                    'oAnswer' => $aParams['oAnswer'],
+                    'oQuestion' => $aParams['oAnswer']->getQuestion(['#with_moderation' => 1])
+                ], 
+                'questions', 
+                true
+            );
+        }
+        
     }
 }

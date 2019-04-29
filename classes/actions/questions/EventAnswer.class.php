@@ -53,20 +53,18 @@ class PluginQuestions_ActionQuestions_EventAnswer extends Event {
             $oAnswer->_setValidateScenario('edit');
         }
         
-        if(!$oAnswer->_isNew() and $oAnswer->getQuestion()->isClosed()){
-            $this->Message_AddError($this->Lang_Get('plugin.questions.answer.error_question_closed'));
-            return;
-        }
-        
         $oAnswer->_setDataSafe($_REQUEST);
         $oAnswer->setUserId($this->oUserCurrent->getId());
         $oAnswer->setText($this->Text_Parser($oAnswer->getText()));
         
         if($oAnswer->_Validate()){
+            if($oAnswer->_isNew() and $oAnswer->getQuestion()->isClosed()){
+            $this->Message_AddError($this->Lang_Get('plugin.questions.answer.error_question_closed'));
+            return;
+        }
+            
             if($oAnswer->Save()){
-                
-                $this->Hook_Run('add_answer', array('oAnswer' => 'kk'));
-                
+                                
                 if(getRequest('photos')){
                     $this->Media_AttachMedia(getRequest('photos'), 'question', $oAnswer->getId());
                 }else{

@@ -13,7 +13,9 @@
         
         <div>
             <h1 class="mt-0">{$oQuestion->getTitle()}</h1>
-            <span class="text-muted">{$oQuestion->getAuthor()->getName()}</span> 
+            <span class="text-muted">
+                <a href="{$oQuestion->getAuthor()->getProfileUrl()}">{$oQuestion->getAuthor()->getName()}</a>
+            </span> 
 
             <span class="mx-2">&bull;</span>
             <span class="text-muted font-italic">{$oQuestion->getDateCreateFormat()}</span>
@@ -62,6 +64,7 @@
     {capture name="answers"}
         {foreach $oQuestion->getAnswersOrder() as $oAnswer name="answers"}
             {component 'questions:answer' 
+                questionClosed = $oQuestion->isClosed()
                 withBestBtn = ($oUserCurrent and ($oUserCurrent->getId() == $oQuestion->getAuthor()->getId()) ) 
                 classes = "ml-3 mt-4"
                 oAnswer = $oAnswer}

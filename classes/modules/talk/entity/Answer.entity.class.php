@@ -94,8 +94,12 @@ class PluginQuestions_ModuleTalk_EntityAnswer extends EntityORM{
     }
     
     public function ValidateExistQuestion($sValue) {
-        if(!$this->PluginQuestions_Talk_GetQuestionById($sValue) ){
+        if(!$oQuestion = $this->PluginQuestions_Talk_GetQuestionById($sValue) ){
             return $this->Lang_Get('common.error.error').' Question not found';
+        }
+        
+        if($this->_isNew() and $oQuestion->isClosed()){
+            return $this->Lang_Get('plugin.questions.answer.notice.error_question_closed');
         }
        
         return true;
@@ -138,7 +142,11 @@ class PluginQuestions_ModuleTalk_EntityAnswer extends EntityORM{
     }
     
     public function getUrl() {
-        return $this->getQuestion()->getUrl().'#ans'.$this->getId();
+        $oQuestion = $this->PluginQuestions_Talk_GetQuestionByFilter([
+            '#with_moderation' => 1, 
+            'id' => $this->getQuestionId()
+        ]);
+        return $oQuestion->getUrl().'#ans'.$this->getId();
     }
     
     public function getTitle() {
@@ -148,4 +156,9 @@ class PluginQuestions_ModuleTalk_EntityAnswer extends EntityORM{
     public function isBest() {
         return ($this->getState() == self::STATE_BEST);
     }
+    
+    public function afterModerate() {
+        $this->Hook_Run('add_answer', array('target_id' => parent::getQuestion()->getId(),'oAnswer' => $this)); 
+    }
+    
 }

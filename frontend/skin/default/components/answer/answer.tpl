@@ -2,7 +2,7 @@
  * Предложение
  *}
  
-{component_define_params params=[ 'oAnswer', 'classes', 'withBestBtn']}
+{component_define_params params=[ 'oAnswer', 'classes', 'withBestBtn', 'questionClosed']}
 
 <div id="ans{$oAnswer->getId()}" class="answer {$classes} d-flex flex-md-row flex-column" data-id="{$oAnswer->getId()}">
         <div class="pb-3">
@@ -10,7 +10,9 @@
         </div>
         
         <div>
-            <span class="text-muted">{$oAnswer->getAuthor()->getName()}</span> 
+            <span class="text-muted">
+                <a href="{$oAnswer->getAuthor()->getProfileUrl()}">{$oAnswer->getAuthor()->getName()}</a>
+            </span> 
 
             <span class="mx-2">&bull;</span>
             <span class="text-muted font-italic">{$oAnswer->getDateCreateFormat()}</span>
@@ -36,7 +38,7 @@
                     text= $aLang.plugin.questions.question.actions.like}
                     
                 {if $withBestBtn}
-                    {component "questions:answer.best-btn" oAnswer=$oAnswer}
+                    {component "questions:answer.best-btn" oAnswer=$oAnswer noBestHide=$questionClosed}
                 {else}
                     {if $oAnswer->isBest()}
                         {component "questions:answer.best-btn" oAnswer=$oAnswer static=true}
