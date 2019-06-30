@@ -12,20 +12,19 @@
     {$oAnswer->_setValidateScenario('create')}
     
     {* Текст *}
-   {component 'questions:editor' 
+    {component 'tinymce' 
         validate   = [
             entity => $oAnswer
         ]
-        type        = 'visual' 
-        classes     = 'js-editor-answer'
+        id          = "answerEdit"
         name        = "text"
         value       = $oAnswer->getText()
         label       = $aLang.plugin.questions.answer.form.text.label
         placeholder = $aLang.plugin.questions.answer.form.text.placeholder
     }
         
-    {component "field.hidden" name="question_id" value="{$question_id}"}
-    
+    <input type="hidden" name="question_id" value="{$question_id}">
+    <input type="hidden" name="id" value="0">
     <input type="hidden" name="redirect" value="{$redirect}">
     
     {component "bs-button" text=$aLang.plugin.questions.answer.form.submit.text type="submit" bmods="primary"}

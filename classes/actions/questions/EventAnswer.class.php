@@ -64,12 +64,6 @@ class PluginQuestions_ActionQuestions_EventAnswer extends Event {
         }
             
             if($oAnswer->Save()){
-                                
-                if(getRequest('photos')){
-                    $this->Media_AttachMedia(getRequest('photos'), 'question', $oAnswer->getId());
-                }else{
-                    $this->Media_RemoveTargetByTypeAndId('question', $oAnswer->getId());
-                }
                 
                 $this->Viewer_AssignAjax('sUrlRedirect', $oAnswer->getQuestion()->getUrl());
                 

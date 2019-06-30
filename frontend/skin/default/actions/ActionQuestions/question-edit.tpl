@@ -43,12 +43,10 @@
             }
         
         {* Текст *}
-        {component 'questions:editor' 
+        {component 'tinymce' 
             validate   = [
                 entity => $oQuestion
             ]
-            type        = 'visual' 
-            classes     = 'js-editor-default'
             name        = "text"
             value       = $oQuestion->getText()
             label       = $aLang.plugin.questions.edit_question.form.text.label
@@ -62,6 +60,7 @@
         {if $oUserCurrent}
             {component "field.hidden" name="user_id" value="{$oUserCurrent->getId()}"}
         {/if}
+        
         
         {component "bs-button" 
             bmods = "primary" 

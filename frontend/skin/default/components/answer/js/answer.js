@@ -41,8 +41,11 @@
 
         edit:function(e){
             this.elements.tabForm.tab('show');
-            this.elements.answerForm.find('.js-editor-answer').lsEditor('setText', this.elements.answerText.html());
-            this.elements.answerForm.append('<input type="hidden" name="id" value="'+this.element.data('id')+'"/>')
+            if(window.tinymce === undefined){
+                return;
+            }
+            window.tinymce.get('answerEdit').setContent(this.elements.answerText.html())
+            this.elements.answerForm.find('[name="id"]').val(this.element.data('id'));
             e.preventDefault();
         }
         

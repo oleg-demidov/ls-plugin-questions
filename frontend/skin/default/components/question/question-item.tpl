@@ -2,7 +2,7 @@
 {component_define_params params=[ 'oQuestion', 'classes' ]}
 
 <div class="question media {$classes}">
-    <img  class="mr-3 rounded-circle" src="{$oQuestion->getAuthor()->getProfileAvatar()}" alt="{$oQuestion->getAuthor()->getLogin()}">
+    <img  class="mr-3 rounded-circle" src="{$oQuestion->getAuthor()->getProfileAvatar('50x50')}" alt="{$oQuestion->getAuthor()->getLogin()}">
     <div class="media-body">
         <h5 class="mt-0"><a href="{$oQuestion->getUrl()}" class="link">{$oQuestion->getTitle()}</a></h5>
         <span class="text-muted">

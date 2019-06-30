@@ -69,9 +69,9 @@ class PluginQuestions_ModuleTalk_EntityQuestion extends EntityORM{
             'text', 
             'string', 
             'max' => 2000, 
-            'min' => 10, 
+            'min' => 100, 
             'allowEmpty' => false,
-            'msg' => $this->Lang_Get('plugin.questions.edit_question.form.text.error_validate', ['min' => 10, 'max' => 2000]),
+            'msg' => $this->Lang_Get('plugin.questions.edit_question.form.text.error_validate', ['min' => 100, 'max' => 2000]),
             'on' => [ 'create', 'edit']
         );
         $this->aValidateRules[] =    array(
@@ -79,8 +79,6 @@ class PluginQuestions_ModuleTalk_EntityQuestion extends EntityORM{
             'double_text',
             'on' => ['create'],
         );
-        
-        
         
     }
     
@@ -141,13 +139,13 @@ class PluginQuestions_ModuleTalk_EntityQuestion extends EntityORM{
         return $date->format('d.m.y');
     }
     
-    public function getMedia() {
-        if(is_array(parent::getMedia()) and count(parent::getMedia())){
-            return parent::getMedia();
-        }
-        
-        return $this->Media_GetMediaByTarget($this->getType(), $this->getId());
-    }
+//    public function getMedia() {
+//        if(is_array(parent::getMedia()) and count(parent::getMedia())){
+//            return parent::getMedia();
+//        }
+//        
+//        return $this->Media_GetMediaByTarget($this->getType(), $this->getId());
+//    }
     
     public function isPublish() {
         return in_array($this->getState(), [
@@ -159,7 +157,7 @@ class PluginQuestions_ModuleTalk_EntityQuestion extends EntityORM{
         /*
          * Удалить медиа
          */        
-        $this->Media_RemoveTargetByTypeAndId('question', $this->getId());
+//        $this->Media_RemoveTargetByTypeAndId('question', $this->getId());
        
     }
     

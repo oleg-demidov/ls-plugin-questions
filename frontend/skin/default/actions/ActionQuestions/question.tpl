@@ -8,7 +8,7 @@
 {block 'layout_content'}
     <div class="ml-3 d-flex flex-md-row flex-column">
         <div class="pb-3">
-            <img  class="mr-3 rounded-circle" src="{$oQuestion->getAuthor()->getProfileAvatar()}" alt="{$oQuestion->getAuthor()->getLogin()}">
+            <img  class="mr-3 rounded-circle" src="{$oQuestion->getAuthor()->getProfileAvatar('50x50')}" alt="{$oQuestion->getAuthor()->getLogin()}">
         </div>
         
         <div>
@@ -46,13 +46,11 @@
                 {insert name='block' block='subscribe' params=[ 
                     plugin  => 'subscribe',
                     event   => 'add_answer',
-                    target_id => $oQuestion->getId()
+                    target_id => $oQuestion->getId(),
+                    name    => $oQuestion->getTitle(),
+                    url     => $oQuestion->getUrl()
                 ]}
-                
-                {*{component "bs-button" 
-                    popover = $aLang.plugin.questions.question.actions.complain
-                    bmods = "outline-danger"
-                    icon = "ban"}*}
+              
             </div>
         </div>
     </div>
@@ -91,7 +89,7 @@
         {capture name="form_answer"}
             <div class="d-flex flex-md-row flex-column ml-3"> 
                 <div class="pr-3 pb-3" >
-                    <img class="rounded-circle" src="{$oUserCurrent->getProfileAvatar()}" alt="{$oUserCurrent->getLogin()}">
+                    <img class="rounded-circle" src="{$oUserCurrent->getProfileAvatar('50x50')}" alt="{$oUserCurrent->getLogin()}">
                 </div>
                 <div class="flex-fill">
                     {component "questions:answer.form"
@@ -112,19 +110,7 @@
     
     
     {component "bs-tabs" bmods="tabs" classes="mt-5" contentClasses="mt-4" activeItem="answers" items = $itemsTabs}
-    
-    
 
-    
-
-    
-    
-{*
-    {component "bs-card" classes = "bg-light  border-0" content = [
-        [
-            type => 'body',
-            content => $smarty.capture.form_answer
-        ]
-    ]}*}
     
 {/block}
+

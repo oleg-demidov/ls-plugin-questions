@@ -41,7 +41,7 @@ class PluginQuestions_ActionQuestions_EventQuestion extends Event {
         if(!$oQuestion = $this->PluginQuestions_Talk_GetQuestionById($this->GetParam(0))){
             $oQuestion = Engine::GetEntity('PluginQuestions_Talk_Question');
         }
-
+        
         $this->Viewer_Assign('oQuestion', $oQuestion);
         $this->SetTemplateAction('question-edit');
     }
@@ -49,7 +49,11 @@ class PluginQuestions_ActionQuestions_EventQuestion extends Event {
     
     public function EventList()
     {
-        $aFilter = [];
+        $aFilter = [
+            '#with' => [
+                '#media'
+            ]
+        ];
         $aGetParamsList = [];
         
         if(getRequest('order')){
@@ -148,10 +152,7 @@ class PluginQuestions_ActionQuestions_EventQuestion extends Event {
             '#where' => ['t.id = ?d OR t.url = ?' => [$this->GetEventMatch(1), $this->GetEventMatch(1)]]
         ]);
         
-//        if(!$oQuestion->moderation->isModerated()){
-//            $this->SetTemplateAction('question-moderation');
-//            $this->Viewer_ClearBlocksAll();
-//        }
+        $this->Component_Add('media:library');
         
         $this->Viewer_Assign('oQuestion', $oQuestion);
         $this->Viewer_Assign('oAnswerEntity', Engine::GetEntity('PluginQuestions_Talk_Answer'));
@@ -184,11 +185,11 @@ class PluginQuestions_ActionQuestions_EventQuestion extends Event {
             if($oQuestion->Save()){
                 
                 
-                if(getRequest('photos')){
-                    $this->Media_AttachMedia(getRequest('photos'), 'question', $oQuestion->getId());
-                }else{
-                    $this->Media_RemoveTargetByTypeAndId('question', $oQuestion->getId());
-                }
+//                if(getRequest('photos')){
+//                    $this->Media_AttachMedia(getRequest('photos'), 'question', $oQuestion->getId());
+//                }else{
+//                    $this->Media_RemoveTargetByTypeAndId('question', $oQuestion->getId());
+//                }
                 
                 $this->Viewer_AssignAjax('sUrlRedirect', $oQuestion->getUrl());
                 

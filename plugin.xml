@@ -13,6 +13,7 @@
 		<livestreet>2.0.1</livestreet>
 		<plugins>
                     <moderation>1.0.0</moderation>
+                    <media>1.0.0</media>
 		</plugins>
 	</requires>
 	<description>

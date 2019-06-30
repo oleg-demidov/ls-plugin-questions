@@ -49,7 +49,7 @@ class PluginQuestions extends Plugin
         $this->PluginSubscribe_Subscribe_CreateEvent(
             'add_answer',
             'Ответ',
-            'PluginQuestions_Talk_SubscribeEventAnswer'
+            'PluginQuestions_Talk_CallbackEventAnswer'
         );
         
         return true;

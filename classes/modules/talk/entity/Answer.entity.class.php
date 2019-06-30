@@ -25,7 +25,7 @@ class PluginQuestions_ModuleTalk_EntityAnswer extends EntityORM{
             'moderation_fields' => [
                 'text'
             ],
-            'title_field' => 'title',
+            'title_field' => 'text',
             'label' => 'Ответ'
         ]
     );
@@ -110,13 +110,6 @@ class PluginQuestions_ModuleTalk_EntityAnswer extends EntityORM{
         return $date->format('d.m.y');
     }
     
-    public function getMedia() {
-        if(is_array(parent::getMedia()) and count(parent::getMedia())){
-            return parent::getMedia();
-        }
-        
-        return $this->Media_GetMediaByTarget($this->getType(), $this->getId());
-    }
     
     public function isPublish() {
         return in_array($this->getState(), [
@@ -124,19 +117,7 @@ class PluginQuestions_ModuleTalk_EntityAnswer extends EntityORM{
         ]);
     }
     
-    public function afterDelete() {
-        /*
-         * Удалить потомков
-         */
-        
-        
-        /*
-         * Удалить медиа
-         */        
-        $this->Media_RemoveTargetByTypeAndId('answer', $this->getId());
-       
-    }
-    
+   
     public function setBest() {
         $this->setState(self::STATE_BEST);
     }

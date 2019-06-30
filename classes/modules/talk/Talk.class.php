@@ -17,7 +17,11 @@ class PluginQuestions_ModuleTalk extends ModuleORM
             'class'     => 'PluginLike_ModuleLike_BehaviorModule',
             'target_type'   => 'question'
         ],
-        'moderation' => 'PluginModeration_ModuleModeration_BehaviorModule'
+        'moderation' => 'PluginModeration_ModuleModeration_BehaviorModule',
+        'media' => [
+            'PluginMedia_ModuleMedia_BehaviorModule',
+            'target_type' => 'media'
+        ]
     );
 
     public function Init()

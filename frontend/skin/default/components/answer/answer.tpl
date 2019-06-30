@@ -6,7 +6,7 @@
 
 <div id="ans{$oAnswer->getId()}" class="answer {$classes} d-flex flex-md-row flex-column" data-id="{$oAnswer->getId()}">
         <div class="pb-3">
-            <img  class="mr-3 rounded-circle" src="{$oAnswer->getAuthor()->getProfileAvatar()}" alt="{$oAnswer->getAuthor()->getLogin()}">
+            <img  class="mr-3 rounded-circle" src="{$oAnswer->getAuthor()->getProfileAvatar('50x50')}" alt="{$oAnswer->getAuthor()->getLogin()}">
         </div>
         
         <div>
