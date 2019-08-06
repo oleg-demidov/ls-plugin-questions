@@ -27,7 +27,7 @@ $config['admin']['components'] = [
 //    'wiki:editor'
 ]; 
 
-//$config['assets']['js'][]  = 'assets/js/init.js'; 
+$config['assets']['js'][]  = 'assets/js/init.js'; 
 
 $config['$root$']['block']['questions'] = array(
     'action' => array(

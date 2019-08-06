@@ -24,8 +24,13 @@ class PluginQuestions extends Plugin
     public function Init()
     {
         $this->Component_Add('questions:answer');
-        $this->Viewer_AppendScript(Plugin::GetTemplatePath('questions'). '/assets/js/init.js');
+        $this->Asset_AddJs(Plugin::GetTemplatePath('questions'). '/assets/js/init.js', [
+            'dependecies' => [
+                'component@bootstrap.bootstrap'
+            ]
+        ]);
         
+       
     }
 
     public function Activate()
@@ -46,12 +51,18 @@ class PluginQuestions extends Plugin
             'Ответы'
         );
         
-        $this->PluginSubscribe_Subscribe_CreateEvent(
-            'add_answer',
-            'Ответ',
-            'PluginQuestions_Talk_CallbackEventAnswer'
-        );
+//        $this->PluginSubscribe_Subscribe_CreateEvent(
+//            'add_answer',
+//            'Ответ',
+//            'PluginQuestions_Talk_CallbackEventAnswer'
+//        );
         
+        $this->PluginNotify_Notify_CreateEvent(
+           'add_answer', 
+           $this->Lang_Get('plugin.questions.notify.add_answer'), 
+           'questions', 
+           'PluginQuestions_Talk_CallbackEventAnswer');
+         
         return true;
     }
     

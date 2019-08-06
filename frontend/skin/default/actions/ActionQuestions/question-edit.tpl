@@ -54,11 +54,11 @@
             }
 
         {if !$oQuestion->_isNew()}
-            {component "field.hidden" name="id" value="{$oQuestion->getId()}"}
+            <input type="hidden" name="id" value="{$oQuestion->getId()}">
         {/if}
 
         {if $oUserCurrent}
-            {component "field.hidden" name="user_id" value="{$oUserCurrent->getId()}"}
+            <input type="hidden" name="id" value="{$oUserCurrent->getId()}">
         {/if}
         
         

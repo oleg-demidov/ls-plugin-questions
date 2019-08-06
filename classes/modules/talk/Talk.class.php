@@ -54,4 +54,30 @@ class PluginQuestions_ModuleTalk extends ModuleORM
         }
         
     }
+    
+    public function CallbackAddAnswer($aUserIds, $aParams) {
+        
+        $aUsers = $this->User_GetUserItemsByFilter(['id in' => $aUserIds]);
+        if(!$aUsers){
+            return;
+        }
+        
+        foreach ($aUsers as $oUser) {
+            /*
+             * Оповещение
+             */
+            $this->Notify_Send(
+                $oUser,
+                'add_answer.tpl',
+                $this->Lang_Get('plugin.questions.emails.add_answer.subject'),
+                [
+                    'oAnswer' => $aParams['oAnswer'],
+                    'oQuestion' => $aParams['oAnswer']->getQuestion(['#with_moderation' => 1])
+                ], 
+                'questions', 
+                true
+            );
+        }
+        
+    }
 }
